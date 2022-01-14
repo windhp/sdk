@@ -19,7 +19,7 @@ public class Constants {
     /**
      * UserAgent
      */
-    public static final String USER_AGENT = "demo/aliyun/java";
+    public static final String USER_AGENT = "demo/windhp/java";
 
     /**
      * 换行符
