@@ -45,7 +45,7 @@ WinDHP SDK for Java 让您不用复杂编程即可访问WinDHP产品。
 ## 快速使用
 
 以下这个代码示例向您展示了调用 WinDHP SDK for Java 的3个主要步骤：
-1. 创建DefaultAcsClient实例并初始化。
+1. 创建IProfile实例并初始化。
 2. 创建API请求并设置参数。
 3. 发起请求并处理应答或异常。
 
