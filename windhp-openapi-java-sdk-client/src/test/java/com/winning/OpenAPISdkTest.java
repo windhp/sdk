@@ -25,12 +25,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class OpenAPISdkTest {
 
+
+
     @Test
     public void getTest(){
         IProfile profile = DHPProfile.getProfile("63719546888192", "65203300044800", "EaET70NgqMfYApKebWSWNRskjR2BjRyI");
-        Response response = null;
         try {
-            response = DHPHttpClient.get(profile)
+            Response response = DHPHttpClient.get(profile)
                     .url("http://172.16.30.147/opengateway/call/simple")
                     .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
                     .build()
