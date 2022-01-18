@@ -26,17 +26,17 @@ WinDHP SDK for Java 让您不用复杂编程即可访问WinDHP产品。
 
 如果 maven 没有从中央存储库下载 jar 包，则需要将这些依赖项添加到`pom.xml`文件中，否则将报告 NoClassDefFoundError 异常
 ```xml
- <dependency>
+<dependency>
     <groupId>commons-codec</groupId>
     <artifactId>commons-codec</artifactId>
     <version>1.15</version>
- </dependency>
+</dependency>
 
- <dependency>    
+<dependency>
     <groupId>org.bouncycastle</groupId>
     <artifactId>bcprov-jdk15on</artifactId>
     <version>1.69</version>
- </dependency>
+</dependency>
 ```
 
 ## 使用诊断
