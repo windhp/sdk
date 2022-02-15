@@ -11,9 +11,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.*;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 16:01
+ * @author xch
+ * @date 2022/1/7 16:01
  */
 public class GetBuilder extends OkHttpRequestBuilder<GetBuilder> {
 

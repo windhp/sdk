@@ -14,9 +14,8 @@ import java.util.function.BiConsumer;
 import java.util.zip.*;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 16:11
+ * @author xch
+ * @date 2022/1/7 16:11
  */
 public class IOUtil {
 	private static Log logger = LogFactory.getLog(IOUtil.class);

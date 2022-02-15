@@ -1,9 +1,8 @@
 package com.winning.exceptions;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/12 15:52
+ * @author xch
+ * @date 2022/1/12 15:52
  */
 public class ClientException extends Exception{
 

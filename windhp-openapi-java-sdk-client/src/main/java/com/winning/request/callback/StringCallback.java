@@ -8,9 +8,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 16:11
+ * @author xch
+ * @date 2022/1/7 16:11
  */
 public abstract class StringCallback implements Callback {
 

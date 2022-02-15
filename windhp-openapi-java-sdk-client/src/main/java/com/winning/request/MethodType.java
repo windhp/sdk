@@ -1,9 +1,9 @@
 package com.winning.request;
 
 /**
- * @description: http方法
- * @author: xch
- * @time: 2021/12/21 10:23
+ * http方法
+ * @author xch
+ * @date 2021/12/21 10:23
  */
 public enum MethodType {
     /**

@@ -16,9 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 15:59
+ * @author xch
+ * @date 2022/1/7 15:59
  */
 public class PostRequest extends OkHttpRequest {
     public static Log logger = LogFactory.getLog(PostRequest.class);

@@ -9,9 +9,8 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 16:11
+ * @author xch
+ * @date 2022/1/7 16:11
  */
 public class Response {
 	private okhttp3.Response okhttpResponse;

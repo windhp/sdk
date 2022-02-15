@@ -19,9 +19,8 @@ import java.util.regex.Pattern;
 import com.winning.request.PostRequest.FileInfo;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 16:01
+ * @author xch
+ * @date 2022/1/7 16:01
  */
 public class PostBuilder extends OkHttpRequestBuilder<PostBuilder> {
 

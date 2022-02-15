@@ -4,9 +4,8 @@ import com.winning.profile.IProfile;
 import okhttp3.OkHttpClient;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 16:11
+ * @author xch
+ * @date 2022/1/7 16:11
  */
 public class HttpClient {
 

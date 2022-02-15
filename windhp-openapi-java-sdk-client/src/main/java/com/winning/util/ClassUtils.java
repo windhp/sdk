@@ -5,9 +5,8 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 16:11
+ * @author xch
+ * @date 2022/1/7 16:11
  */
 public class ClassUtils {
 

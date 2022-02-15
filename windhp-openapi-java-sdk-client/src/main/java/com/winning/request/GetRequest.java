@@ -7,9 +7,8 @@ import okhttp3.RequestBody;
 import java.util.Map;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 15:59
+ * @author xch
+ * @date 2022/1/7 15:59
  */
 public class GetRequest extends OkHttpRequest {
     protected GetRequest(String url,

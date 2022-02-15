@@ -1,9 +1,8 @@
 package com.winning.profile;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/10 13:47
+ * @author xch
+ * @date 2022/1/10 13:47
  */
 public class ApiClient {
     private String serviceCode;

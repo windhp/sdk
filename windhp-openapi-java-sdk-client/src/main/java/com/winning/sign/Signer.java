@@ -9,9 +9,9 @@ import com.winning.sign.signers.SignatureAlgorithm;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @description: 签名
- * @author: xch
- * @time: 2021/12/17 16:48
+ * 签名
+ * @author xch
+ * @date 2021/12/17 16:48
  */
 public abstract class Signer {
 
@@ -43,21 +43,21 @@ public abstract class Signer {
      * 获取签名
      * @param stringToSign: 签名内容
      * @param accessKeySecret: 签名秘钥
-     * @return: java.lang.String 签名结果
+     * @return java.lang.String 签名结果
      */
     public abstract String signString(String stringToSign, String accessKeySecret);
 
     /**
      * 获取签名算法名称
-     * @return: java.lang.String
+     * @return java.lang.String
      */
     public abstract String getSignerName();
 
     /**
      * 对应算法的hash
-     * @param raw
-     * @return
-     * @throws NoSuchAlgorithmException
+     * @param raw 需要hash的byte数组
+     * @return hash的byte数组
+     * @exception NoSuchAlgorithmException 当请求特定加密算法但在环境中不可用时，抛出此异常
      */
     public abstract byte[] hash(byte[] raw) throws NoSuchAlgorithmException;
 

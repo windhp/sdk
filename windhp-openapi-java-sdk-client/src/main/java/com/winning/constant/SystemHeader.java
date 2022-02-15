@@ -1,9 +1,9 @@
 package com.winning.constant;
 
 /**
- * @description: 请求头的KEY
- * @author: xch
- * @time: 2021/12/17 15:40
+ * 请求头的KEY
+ * @author xch
+ * @date 2021/12/17 15:40
  */
 public class SystemHeader {
 

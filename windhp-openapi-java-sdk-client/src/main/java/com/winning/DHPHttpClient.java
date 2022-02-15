@@ -1,6 +1,7 @@
 package com.winning;
 
 
+import com.winning.constant.Constants;
 import com.winning.profile.IProfile;
 import com.winning.request.GetBuilder;
 import com.winning.request.HttpClient;
@@ -15,9 +16,8 @@ import javax.net.ssl.*;
 import java.security.SecureRandom;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 16:11
+ * @author xch
+ * @date 2022/1/7 16:11
  */
 public class DHPHttpClient {
 
@@ -33,7 +33,7 @@ public class DHPHttpClient {
 		final X509TrustManager trustManager = new X509TrustManagerImpl();
 		SSLSocketFactory sslSocketFactory=null;
 		try {
-			SSLContext sslContext = SSLContext.getInstance("SSL");
+			SSLContext sslContext = SSLContext.getInstance(Constants.HTTP_SSL);
 			sslContext.init(null, new TrustManager[] { trustManager },new SecureRandom());
 			sslSocketFactory = sslContext.getSocketFactory();
 		} catch (Exception e) {
@@ -68,30 +68,18 @@ public class DHPHttpClient {
 	}
 
 
-	/**
-	 * @return the httpClient
-	 */
 	public static HttpClient getHttpClient() {
 		return httpClient;
 	}
 
-	/**
-	 * @param httpClient the httpClient to set
-	 */
 	public static void setHttpClient(HttpClient httpClient) {
 		DHPHttpClient.httpClient = httpClient;
 	}
 
-	/**
-	 * 
-	 */
 	public static void cancelAll() {
 		cancelAll(httpClient.getOkHttpClient());
 	}
 
-	/**
-	 *
-	 */
 	public static void cancelAll(final OkHttpClient okHttpClient) {
 		if (okHttpClient != null) {
 			for (Call call : okHttpClient.dispatcher().queuedCalls()) {
@@ -105,8 +93,7 @@ public class DHPHttpClient {
 
 	/**
 	 * 取消
-	 * @param tag:
-	 * @return: void
+	 * @param tag: tag
 	 */
 	public static void cancel(final Object tag) {
 		cancel(httpClient.getOkHttpClient(), tag);
@@ -115,8 +102,7 @@ public class DHPHttpClient {
 	/**
 	 * 取消
 	 * @param okHttpClient:
-	 * @param tag:
-	 * @return: void
+	 * @param tag: tag
 	 */
 	public static void cancel(final OkHttpClient okHttpClient,final Object tag) {
 		if (okHttpClient != null && tag!=null) {

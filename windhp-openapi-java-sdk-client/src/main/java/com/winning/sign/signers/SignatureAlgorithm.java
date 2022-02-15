@@ -1,9 +1,9 @@
 package com.winning.sign.signers;
 
 /**
- * @description: 签名算法
- * @author: xch
- * @time: 2021/12/17 16:59
+ * 签名算法 枚举
+ * @author xch
+ * @date  2021/12/17 16:59
  */
 public enum SignatureAlgorithm {
 

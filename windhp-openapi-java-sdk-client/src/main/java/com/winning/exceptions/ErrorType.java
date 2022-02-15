@@ -19,9 +19,8 @@
 package com.winning.exceptions;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/10 11:33
+ * @author xch
+ * @date 2022/1/10 11:33
  */
 public enum ErrorType {
     // 客户端异常

@@ -9,9 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 15:30
+ * @author xch
+ * @date 2022/1/7 15:30
  */
 public abstract class OkHttpRequestBuilder<T extends OkHttpRequestBuilder> {
 
@@ -112,7 +111,8 @@ public abstract class OkHttpRequestBuilder<T extends OkHttpRequestBuilder> {
 
     /**
      * 创建RequestCall
-     * @return: com.winning.request.RequestCall
+     * @return 请求Call对象
+     * @exception ClientException 端异常
      */
     public abstract RequestCall build() throws ClientException;
 }

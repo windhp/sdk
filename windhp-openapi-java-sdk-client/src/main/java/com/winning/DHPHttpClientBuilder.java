@@ -15,9 +15,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 16:11
+ * @author xch
+ * @date  2022/1/7 16:11
  */
 public class DHPHttpClientBuilder {
 
@@ -51,9 +50,9 @@ public class DHPHttpClientBuilder {
 
 	/**
 	 * 
-	 * @param timeout
-	 * @param unit
-	 * @return
+	 * @param timeout 超时时间
+	 * @param unit 超时单位
+	 * @return DHPHttpClientBuilder
 	 */
 	public DHPHttpClientBuilder writeTimeout(long timeout, TimeUnit unit) {
 		builder.writeTimeout(timeout, unit);
@@ -64,7 +63,7 @@ public class DHPHttpClientBuilder {
 	 * 
 	 * @param interval
 	 * @param unit
-	 * @return
+	 * @return DHPHttpClientBuilder
 	 */
 	public DHPHttpClientBuilder pingInterval(long interval, TimeUnit unit) {
 		builder.pingInterval(interval, unit);
@@ -112,9 +111,9 @@ public class DHPHttpClientBuilder {
 	}
 
 	/**
-	 * 
-	 * @param dns
-	 * @return
+	 * 设置DNS
+	 * @param dns DNS
+	 * @return DHPHttpClientBuilder
 	 */
 	public DHPHttpClientBuilder dns(Dns dns) {
 		builder.dns(dns);

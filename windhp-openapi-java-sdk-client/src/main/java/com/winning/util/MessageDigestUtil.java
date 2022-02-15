@@ -10,9 +10,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 16:09
+ * @author xch
+ * @date 2022/1/7 16:09
  */
 public class MessageDigestUtil {
     /**
@@ -99,7 +98,7 @@ public class MessageDigestUtil {
             return new byte[0];
         }
         try {
-            return str.getBytes(Constants.ENCODING);
+            return str.getBytes(Constants.ENCODING_UTF8);
         } catch (final UnsupportedEncodingException e) {
             throw new ClientException("UnsupportedEncodingException", e.getMessage(), e);
         }

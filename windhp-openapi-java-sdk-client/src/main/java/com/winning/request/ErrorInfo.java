@@ -1,9 +1,8 @@
 package com.winning.request;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/12 15:57
+ * @author xch
+ * @date 2022/1/12 15:57
  */
 public class ErrorInfo extends Response{
     private int statusCode;

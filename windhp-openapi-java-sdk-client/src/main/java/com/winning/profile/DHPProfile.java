@@ -1,9 +1,8 @@
 package com.winning.profile;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/10 11:33
+ * @author xch
+ * @date  2022/1/10 11:33
  */
 public class DHPProfile implements IProfile {
 

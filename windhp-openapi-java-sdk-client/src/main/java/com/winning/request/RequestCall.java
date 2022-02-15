@@ -13,9 +13,9 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 
 /**
- * @description: 请求类
- * @author: xch
- * @time: 2022/1/7 16:11
+ * 请求类
+ * @author xch
+ * @date 2022/1/7 16:11
  */
 public class RequestCall {
 

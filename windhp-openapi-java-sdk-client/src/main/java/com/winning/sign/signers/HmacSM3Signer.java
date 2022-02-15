@@ -15,9 +15,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @description: HmacSHA256签名算法
- * @author: xch
- * @time: 2021/12/17 16:51
+ * HmacSHA256签名算法
+ * @author xch
+ * @date  2021/12/17 16:51
  */
 public class HmacSM3Signer extends Signer {
 
@@ -27,10 +27,10 @@ public class HmacSM3Signer extends Signer {
     @Override
     public String signString(String stringToSign, String accessKeySecret) {
         try {
-            SecretKey key = new SecretKeySpec((accessKeySecret).getBytes(Constants.ENCODING), ALGORITHM_NAME);
+            SecretKey key = new SecretKeySpec((accessKeySecret).getBytes(Constants.ENCODING_UTF8), ALGORITHM_NAME);
             HMac mac = new HMac(new SM3Digest());
             byte[] sign = new byte[mac.getMacSize()];
-            byte[] inputBytes = stringToSign.getBytes(Constants.ENCODING);
+            byte[] inputBytes = stringToSign.getBytes(Constants.ENCODING_UTF8);
             mac.init(new KeyParameter(key.getEncoded()));
             mac.update(inputBytes, 0, inputBytes.length);
             mac.doFinal(sign, 0);
@@ -47,7 +47,7 @@ public class HmacSM3Signer extends Signer {
 
     @Override
     public byte[] hash(byte[] raw) throws NoSuchAlgorithmException {
-        if(null == raw){
+        if(null == raw) {
             return null;
         }
         BouncyCastleProvider provider = new BouncyCastleProvider();

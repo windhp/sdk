@@ -21,11 +21,11 @@ import com.winning.request.callback.Callback;
 import com.winning.request.PostRequest.FileInfo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 15:30
+ * @author xch
+ * @date 2022/1/7 15:30
  */
 public abstract class OkHttpRequest {
 
@@ -83,14 +83,14 @@ public abstract class OkHttpRequest {
 
     /**
      * 创建 okhttp3.RequestBody
-     * @return: okhttp3.RequestBody
+     * @return okhttp3.RequestBody
      */
     protected abstract RequestBody buildRequestBody();
 
     /**
      * 创建 okhttp3.RequestBody
      * @param requestBody:
-     * @return: okhttp3.Request
+     * @return okhttp3.Request
      */
     protected abstract Request buildRequest(RequestBody requestBody);
 
@@ -100,8 +100,7 @@ public abstract class OkHttpRequest {
 
     public Request createRequest(Callback callback) {
         RequestBody requestBody = buildRequestBody();
-        Request request = buildRequest(requestBody);
-        return request;
+        return buildRequest(requestBody);
     }
 
     protected void appendHeaders(IProfile profile) {
@@ -133,16 +132,15 @@ public abstract class OkHttpRequest {
         String xCaTimestamp = headers.get(SystemHeader.X_CA_TIMESTAMP);
         String xContentMd5 = headers.get(SystemHeader.X_CONENT_MD5);
         String xServiceCode = headers.get(SystemHeader.X_SERVICE_CODE);
-        StringBuilder stringSign = new StringBuilder(method);
-        stringSign.append(Constants.LF)
-                .append(contentType)
-                .append(Constants.LF)
-                .append(SystemHeader.X_CA_KEY.toLowerCase()).append(Constants.COLON).append(xCaKey).append(Constants.AND_MARK)
-                .append(SystemHeader.X_CA_NONCE.toLowerCase()).append(Constants.COLON).append(xCaNonce).append(Constants.AND_MARK)
-                .append(SystemHeader.X_CA_TIMESTAMP.toLowerCase()).append(Constants.COLON).append(xCaTimestamp).append(Constants.AND_MARK)
-                .append(SystemHeader.X_CONENT_MD5.toLowerCase()).append(Constants.COLON).append(xContentMd5).append(Constants.AND_MARK)
-                .append(SystemHeader.X_SERVICE_CODE.toLowerCase()).append(Constants.COLON).append(xServiceCode);
-        return stringSign.toString();
+        String stringSign = method + Constants.LF +
+                contentType +
+                Constants.LF +
+                SystemHeader.X_CA_KEY.toLowerCase() + Constants.COLON + xCaKey + Constants.AND_MARK +
+                SystemHeader.X_CA_NONCE.toLowerCase() + Constants.COLON + xCaNonce + Constants.AND_MARK +
+                SystemHeader.X_CA_TIMESTAMP.toLowerCase() + Constants.COLON + xCaTimestamp + Constants.AND_MARK +
+                SystemHeader.X_CONENT_MD5.toLowerCase() + Constants.COLON + xContentMd5 + Constants.AND_MARK +
+                SystemHeader.X_SERVICE_CODE.toLowerCase() + Constants.COLON + xServiceCode;
+        return stringSign;
     }
 
 
@@ -183,12 +181,13 @@ public abstract class OkHttpRequest {
             }
 
             @Override
-            public void writeTo(BufferedSink sink) throws IOException {
+            public void writeTo(@NotNull BufferedSink sink) throws IOException {
                 Source source = null;
                 try {
                     source = Okio.source(is);
                     sink.writeAll(source);
                 } finally {
+                    assert source != null;
                     Util.closeQuietly(source);
                 }
             }
