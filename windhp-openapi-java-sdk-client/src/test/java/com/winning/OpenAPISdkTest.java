@@ -15,13 +15,11 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @description:
- * @author: xch
- * @time: 2022/1/7 18:11
+ * @author xch
+ * @date  2022/1/7 18:11
  */
 public class OpenAPISdkTest {
 
@@ -115,10 +113,6 @@ public class OpenAPISdkTest {
                         System.out.println(response);
                     }
                 });
-    }
-
-    public static void main(String[] args) {
-        postAsyncTest();
     }
 
     @Test
