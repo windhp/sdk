@@ -23,15 +23,17 @@ import java.util.concurrent.TimeUnit;
  */
 public class OpenAPISdkTest {
 
-
-
     @Test
-    public void getTest(){
-        IProfile profile = DHPProfile.getProfile("63719546888192", "65203300044800", "EaET70NgqMfYApKebWSWNRskjR2BjRyI");
+    public void getNaliTest(){
+        IProfile profile = DHPProfile.getProfile("23807728132096", "90555360432128", "izQMdgw5BLD8KQc3svjVN75nwxjqvP1T");
         try {
-            Response response = DHPHttpClient.get(profile)
-                    .url("http://172.16.30.147/opengateway/call/simple")
+            Response response = DHPHttpClient.post(profile)
+                    .url("http://172.17.0.171/opengateway/call/simple")
                     .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
+                    .body("{\n" +
+                            "  \"username\": \"yonghu\",\n" +
+                            "  \"amount\": 1000\n" +
+                            "}")
                     .build()
                     .execute();
             System.out.println(response.string());
@@ -46,6 +48,33 @@ public class OpenAPISdkTest {
             e.printStackTrace();
         }
     }
+
+
+
+    @Test
+    public void getTest(){
+        IProfile profile = DHPProfile.getProfile("63719546888192", "65203300044800", "EaET70NgqMfYApKebWSWNRskjR2BjRyI");
+        try {
+            Response response = DHPHttpClient.post(profile)
+                    .url("http://172.16.30.147/opengateway/call/simple")
+                    .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
+                    .body("{\"hzxm\":\"张三\",\"zjh\":\"310101199001130209\"}")
+                    .build()
+                    .execute();
+            System.out.println(response.string());
+            Assert.assertEquals(response.code(), 200);
+            Assert.assertTrue(StringUtils.isEmpty(response.getCaErrorMessage()));
+            Assert.assertTrue(StringUtils.isNoneEmpty(response.getTraceId()));
+        } catch (ServerException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } catch (ClientException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
 
     @Test
     public void getAsyncTest() throws Exception {
@@ -176,3 +205,4 @@ public class OpenAPISdkTest {
     }
 
 }
+
