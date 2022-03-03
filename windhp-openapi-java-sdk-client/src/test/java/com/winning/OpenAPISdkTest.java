@@ -53,7 +53,7 @@ public class OpenAPISdkTest {
 
     @Test
     public void getTest(){
-        IProfile profile = DHPProfile.getProfile("63719546888192", "65203300044800", "EaET70NgqMfYApKebWSWNRskjR2BjRyI");
+        IProfile profile = DHPProfile.getProfile("637195888192", "65200044800", "EaETgqMfYApKebWSWNRskjR2BjRyI");
         try {
             Response response = DHPHttpClient.post(profile)
                     .url("http://172.16.30.147/opengateway/call/simple")
