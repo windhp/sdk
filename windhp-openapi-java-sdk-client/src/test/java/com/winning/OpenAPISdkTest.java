@@ -8,13 +8,16 @@ import com.winning.profile.DHPProfile;
 import com.winning.profile.IProfile;
 import com.winning.request.Response;
 import com.winning.request.callback.StringCallback;
-import okhttp3.Call;
-import okhttp3.HttpUrl;
+import okhttp3.*;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.net.ssl.*;
 import java.io.IOException;
+import java.security.*;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,14 +28,13 @@ public class OpenAPISdkTest {
 
     @Test
     public void getNaliTest(){
-        IProfile profile = DHPProfile.getProfile("23807728132096", "90555360432128", "izQMdgw5BLD8KQc3svjVN75nwxjqvP1T");
+        IProfile profile = DHPProfile.getProfile("41563211440128", "62989828116480", "AU528h6TGBxWJrkm4tZPoQU9BUpV9y6V");
         try {
             Response response = DHPHttpClient.post(profile)
-                    .url("http://172.17.0.171/opengateway/call/simple")
+                    .url("http://121.40.158.226/opengateway/call/simple")
                     .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
-                    .body("{\n" +
-                            "  \"username\": \"yonghu\",\n" +
-                            "  \"amount\": 1000\n" +
+                    .body("{" +
+                            "  \"zjh\": \"110101199003078371\"" +
                             "}")
                     .build()
                     .execute();
@@ -53,10 +55,10 @@ public class OpenAPISdkTest {
 
     @Test
     public void getTest(){
-        IProfile profile = DHPProfile.getProfile("637195888192", "65200044800", "EaETgqMfYApKebWSWNRskjR2BjRyI");
+        IProfile profile = DHPProfile.getProfile("", "", "");
         try {
             Response response = DHPHttpClient.post(profile)
-                    .url("http://172.16.30.147/opengateway/call/simple")
+                    .url("http://121.40.158.226/opengateway/call/simple")
                     .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
                     .body("{\"hzxm\":\"张三\",\"zjh\":\"310101199001130209\"}")
                     .build()
@@ -73,7 +75,6 @@ public class OpenAPISdkTest {
             e.printStackTrace();
         }
     }
-
 
 
     @Test
@@ -160,19 +161,62 @@ public class OpenAPISdkTest {
         Assert.assertTrue(StringUtils.isNoneEmpty(response.getTraceId()));
     }
 
+
+    /**
+     * SSl 请求HTTPS
+     * @throws ClientException
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws KeyStoreException
+     * @throws KeyManagementException
+     * @throws CertificateException
+     * @throws UnrecoverableKeyException
+     */
     @Test
-    public void getHttpsTest() throws Exception {
-        Response execute = DHPHttpClient.get().url("https://www.baifubao.com/callback?cmd=1059&callback=phone&phone=15639009724").build().execute();
-        System.out.println(execute.body().string());
-        Assert.assertTrue(execute.code() == 200);
+    public void getHttpsTestt() throws ClientException, IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, CertificateException, UnrecoverableKeyException {
+        X509TrustManager myTrustManager = new X509TrustManager() {
+            @Override
+            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
+            @Override
+            public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+            }
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {return new X509Certificate[0];}
+        };
+        HostnameVerifier myHostnameVerifier = new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                System.out.println(hostname);
+                return true;
+            }
+        };
+        SSLContext sslCtx = SSLContext.getInstance("SSL");
+        sslCtx.init(null, new TrustManager[] { myTrustManager }, new SecureRandom());
+        SSLSocketFactory mySSLSocketFactory = sslCtx.getSocketFactory();
+
+        DHPHttpClientBuilder dhpHttpClientBuilder = new DHPHttpClientBuilder();
+        IProfile profile = DHPProfile.getProfile("41563211440128", "62989828116480", "AU528h6TGBxWJrkm4tZPoQU9BUpV9y6V");
+        try {
+            Response response = dhpHttpClientBuilder.sslSocketFactory(mySSLSocketFactory, myTrustManager)
+                    .hostnameVerifier(myHostnameVerifier)
+                    .build()
+                    .post(profile)
+                    .url("http://121.40.158.226/opengateway/call/simple")
+                    .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
+                    .body("{" +
+                            "  \"zjh\": \"110101199003078371\"" +
+                            "}")
+                    .build()
+                    .execute();
+            System.out.println(response.string());
+            Assert.assertEquals(response.code(), 200);
+            Assert.assertTrue(StringUtils.isEmpty(response.getCaErrorMessage()));
+            Assert.assertTrue(StringUtils.isNoneEmpty(response.getTraceId()));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @Test
-    public void postHttpsTest() throws ClientException, IOException {
-        Response execute = DHPHttpClient.get().url("https://www.baidu.com").build().execute();
-        System.out.println(execute.body().string());
-        Assert.assertTrue(execute.code() == 200);
-    }
 
     private static void pressureTest() {
         for (int i = 0; i < 100; i++) {
@@ -205,4 +249,3 @@ public class OpenAPISdkTest {
     }
 
 }
-
