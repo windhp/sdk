@@ -28,7 +28,7 @@ public class OpenAPISdkTest {
 
     @Test
     public void getNaliTest(){
-        IProfile profile = DHPProfile.getProfile("41563211440128", "62989828116480", "AU528h6TGBxWJrkm4tZPoQU9BUpV9y6V");
+        IProfile profile = DHPProfile.getProfile("41563211440128", "62989828116480", "xxx");
         try {
             Response response = DHPHttpClient.post(profile)
                     .url("http://121.40.158.226/opengateway/call/simple")
@@ -79,7 +79,7 @@ public class OpenAPISdkTest {
 
     @Test
     public void getAsyncTest() throws Exception {
-        IProfile profile = DHPProfile.getProfile("63719546888192", "65203300044800", "EaET70NgqMfYApKebWSWNRskjR2BjRyI");
+        IProfile profile = DHPProfile.getProfile("63719546888192", "65203300044800", "xxx");
         DHPHttpClient.get(profile)
             .url("http://172.16.30.147/opengateway/call/simple")
             .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
@@ -101,7 +101,7 @@ public class OpenAPISdkTest {
 
     @Test
     public void getBuilder() throws Exception  {
-        DHPProfile profile = DHPProfile.getProfile("63719546888192", "65203300044800", "EaET70NgqMfYApKebWSWNRskjR2BjRyI");
+        DHPProfile profile = DHPProfile.getProfile("63719546888192", "65203300044800", "xxx");
         DHPHttpClientBuilder dhpHttpClientBuilder = new DHPHttpClientBuilder();
         Response response = dhpHttpClientBuilder.connectTimeout(10, TimeUnit.SECONDS)
                 .build().get(profile)
@@ -116,7 +116,7 @@ public class OpenAPISdkTest {
 
     @Test
     public void postTest() throws Exception {
-        IProfile profile = DHPProfile.getProfile("57874954723328", "65203300044800", "EaET70NgqMfYApKebWSWNRskjR2BjRyI");
+        IProfile profile = DHPProfile.getProfile("57874954723328", "65203300044800", "xxx");
         Response response = DHPHttpClient.post(profile)
                 .url("http://172.16.30.147/opengateway/call/simple")
                 .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
@@ -131,7 +131,7 @@ public class OpenAPISdkTest {
     }
 
     public static void postAsyncTest() {
-        IProfile profile = DHPProfile.getProfile("57874954723328", "65203300044800", "EaET70NgqMfYApKebWSWNRskjR2BjRyI");
+        IProfile profile = DHPProfile.getProfile("57874954723328", "65203300044800", "xxx");
         DHPHttpClient.post(profile)
                 .url("http://172.16.30.147/opengateway/call/simpl")
                 .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
@@ -147,7 +147,7 @@ public class OpenAPISdkTest {
 
     @Test
     public void postBuilder() throws Exception  {
-        IProfile profile = DHPProfile.getProfile("57874954723328", "65203300044800", "EaET70NgqMfYApKebWSWNRskjR2BjRyI");
+        IProfile profile = DHPProfile.getProfile("57874954723328", "65203300044800", "xxx");
         DHPHttpClientBuilder dhpHttpClientBuilder = new DHPHttpClientBuilder();
         Response response = dhpHttpClientBuilder.connectTimeout(10, TimeUnit.SECONDS)
                 .build().post(profile)
@@ -195,13 +195,13 @@ public class OpenAPISdkTest {
         SSLSocketFactory mySSLSocketFactory = sslCtx.getSocketFactory();
 
         DHPHttpClientBuilder dhpHttpClientBuilder = new DHPHttpClientBuilder();
-        IProfile profile = DHPProfile.getProfile("41563211440128", "62989828116480", "AU528h6TGBxWJrkm4tZPoQU9BUpV9y6V");
+        IProfile profile = DHPProfile.getProfile("415632440128", "6298916480", "xxx");
         try {
             Response response = dhpHttpClientBuilder.sslSocketFactory(mySSLSocketFactory, myTrustManager)
                     .hostnameVerifier(myHostnameVerifier)
                     .build()
                     .post(profile)
-                    .url("http://121.40.158.226/opengateway/call/simple")
+                    .url("http://localhost/opengateway/call/simple")
                     .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
                     .body("{" +
                             "  \"zjh\": \"110101199003078371\"" +
