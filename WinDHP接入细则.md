@@ -6,7 +6,7 @@
    请在WinDHP数字健康平台的[WinDHP用户中心注册页](http://121.40.158.226/windhp/crm/#/register) 上注册账户 或者 联系WinDHP运营人员给您分配账户。
    拥有账户后即可在[WinDHP用户中心登录页](http://121.40.158.226/windhp/crm/#/login) 进行登录。
 
-2. 要对接联调WinDHP的某个产品的API，您需要事先在[WinDHP云市场](http://121.40.158.226/windhp/market) 中搜索购买或订阅这个产品;（如果购买不了请联系WinDHP运营人员）
+2. 要对接联调WinDHP的某个产品的API，您需要事先在[WinDHP云市场](http://121.40.158.226/windhp/market) 中搜索购买或订阅这个产品;（如果购买不了请联系WinDHP运营人员,可能存在某些限制条件）
 
 3. 购买或订阅产品之后，即可在[WinDHP用户中心-采购商中心的 订单管理-已购产品](http://121.40.158.226/windhp/crm/#/service) 菜单页看到已购产品；
 
@@ -118,7 +118,64 @@ public class Main {
 
 ## 二、自开发签名接入
 
-### 2.1 签名规则(生成 X-Ca-Signature)
+### 2.1 X-Conent-MD5生成规则
+
+对请求参数先进行MD5摘要再进行Base64编码获取摘要字符串，用于校验QueryParams/Body参数是否被篡改
+
+（post请求为body内容，get/delete请求为url参数（**按照字典排序**）)
+
+> X-Conent-MD5 算法
+
+``` java
+import org.apache.commons.codec.binary.Base64;
+import java.security.MessageDigest;
+
+String content-MD5 = Base64.encodeBase64(MD5(body.getbytes("UTF-8")));
+
+public static String base64AndMd5(String str) {
+      if (str == null) {
+          throw new IllegalArgumentException("inStr can not be null");
+      }
+      try {
+          return base64AndMd5(toBytes(str));
+      } catch (ClientException e) {
+          throw new RuntimeException(e);
+      }
+}
+
+public static String base64AndMd5(byte[] bytes) {
+      if (bytes == null) {
+        throw new IllegalArgumentException("bytes can not be null");
+      }
+      try {
+        final MessageDigest md = MessageDigest.getInstance("MD5");
+        md.reset();
+        md.update(bytes);
+        Base64 base64 = new Base64();
+        final byte[] enbytes = base64.encode(md.digest());
+        return new String(enbytes);
+      } catch (final NoSuchAlgorithmException e) {
+        throw new IllegalArgumentException("unknown algorithm MD5");
+      }
+}
+
+/**
+ * String转换为字节数组
+ */
+private static byte[] toBytes(final String str) throws ClientException{
+    if (str == null) {
+        return new byte[0];
+    }
+    try {
+        return str.getBytes(Constants.ENCODING_UTF8);
+    } catch (final UnsupportedEncodingException e) {
+        throw new ClientException("UnsupportedEncodingException", e.getMessage(), e);
+    }
+}
+
+```
+
+### 2.2 X-Ca-Signature生成规则
 
 目前使用HMacSHA256算法计算签名，签名的计算需要AppSecret，计算方法为:signature = hmacSHA256(stringToSign, appSecret)
 
@@ -193,65 +250,6 @@ public String hmacSHA256(String stringToSign, String appSecret) {
   当签名校验失败时，API网关会将服务端的StringToSign放到HTTP应答的Header中返回到客户端，Key为：`X-Ca-Error-Message`，只需要将本地计算的StringToSign与服务端返回的StringToSign进行对比即可找到问题；
   如果服务端与客户端的签名串是一致的，请检查用于签名计算的密钥是否正确；
   注意：因为HTTP Header中无法表示换行，因此返回的StringToSign中的换行符都被替换成#。
-
-> 关于stringToSign中x-content-md5是如何获取的？下面开始讲解x-content-md5的获取方法:
-
-### 2.2 X-Conent-MD5生成
-
-注意先进行MD5摘要再进行Base64编码获取摘要字符串，用于校验QueryParams/Body参数是否被篡改
-
-（post请求为body内容，get/delete请求为url参数（**按照字典排序**）)
-
-> X-Conent-MD5 算法
-
-``` java
-import org.apache.commons.codec.binary.Base64;
-import java.security.MessageDigest;
-
-String content-MD5 = Base64.encodeBase64(MD5(body.getbytes("UTF-8")));
-
-public static String base64AndMd5(String str) {
-      if (str == null) {
-          throw new IllegalArgumentException("inStr can not be null");
-      }
-      try {
-          return base64AndMd5(toBytes(str));
-      } catch (ClientException e) {
-          throw new RuntimeException(e);
-      }
-}
-
-public static String base64AndMd5(byte[] bytes) {
-      if (bytes == null) {
-        throw new IllegalArgumentException("bytes can not be null");
-      }
-      try {
-        final MessageDigest md = MessageDigest.getInstance("MD5");
-        md.reset();
-        md.update(bytes);
-        Base64 base64 = new Base64();
-        final byte[] enbytes = base64.encode(md.digest());
-        return new String(enbytes);
-      } catch (final NoSuchAlgorithmException e) {
-        throw new IllegalArgumentException("unknown algorithm MD5");
-      }
-}
-
-/**
- * String转换为字节数组
- */
-private static byte[] toBytes(final String str) throws ClientException{
-    if (str == null) {
-        return new byte[0];
-    }
-    try {
-        return str.getBytes(Constants.ENCODING_UTF8);
-    } catch (final UnsupportedEncodingException e) {
-        throw new ClientException("UnsupportedEncodingException", e.getMessage(), e);
-    }
-}
-
-```
 
 ### 2.3 调用平台接口
 
