@@ -19,6 +19,17 @@
 1. 使用WinDHP SDK for Java接入;
 2. 采购商自己开发，按照签名规则接入;
 
+> 对接WinDHP产品的请求头要求
+
+|  参数 |  描述 |
+| ------------ | ------------ |
+| X-Service-Code | 请求头X-Service-Code，所有的API商品发布后均会由平台自动生成唯一的服务code,即ServiceCode  |
+| X-Ca-Key  |  请求头X-Ca-Key，平台分配即AppKey |
+| X-Ca-Nonce  | 请求头X-Ca-Nonce，请求唯一标识，15分钟内 AppKey+API+Nonce 不能重复，与时间戳结合使用才能起到防重放作用。 |
+| X-Ca-Timestamp  | 请求头X-Ca-Timestamp，请求的时间戳，值为当前时间的毫秒数，也就是从1970年1月1日起至今的时间转换为毫秒，时间戳有效时间为15分钟。 |
+| X-Conent-MD5 | 请求头X-Conent-MD5，对请求参数先进行MD5摘要再进行Base64编码获取摘要字符串，用于校验QueryParams/Body参数是否被篡改（post请求为body内容，get/delete请求为url参数（**按照字典排序**）);具体参考：二、自开发签名接入 2.1 X-Conent-MD5生成规则 |
+| X-Ca-Signature| 按照特定规则对请求头和参数进行签名算法计算的结果;具体参考：二、自开发签名接入 2.2 X-Ca-Signature生成规则  |
+
 ## 一、WinDHP SDK for Java接入
 
 欢迎使用 WinDHP SDK for Java。
