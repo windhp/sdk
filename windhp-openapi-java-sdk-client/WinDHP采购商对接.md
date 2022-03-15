@@ -103,7 +103,7 @@ public class Main {
         try {
             Response response = DHPHttpClient.get(profile)
                     //测试地址-（生产地址用户中心的已购产品列表-地址 查看）
-                    .url("http://172.16.30.147/opengateway/call/simple")
+                    .url("http:/域名/opengateway/call/simple")
                     .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
                     .build()
                     .execute();

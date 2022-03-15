@@ -31,10 +31,10 @@ public class OpenAPISdkTest {
         IProfile profile = DHPProfile.getProfile("41563211440128", "62989828116480", "xxx");
         try {
             Response response = DHPHttpClient.post(profile)
-                    .url("http://121.40.158.226/opengateway/call/simple")
+                    .url("http:///opengateway/call/simple")
                     .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
                     .body("{" +
-                            "  \"zjh\": \"110101199003078371\"" +
+                            "  \"zjh\": \"119003078371\"" +
                             "}")
                     .build()
                     .execute();
@@ -58,9 +58,9 @@ public class OpenAPISdkTest {
         IProfile profile = DHPProfile.getProfile("", "", "");
         try {
             Response response = DHPHttpClient.post(profile)
-                    .url("http://121.40.158.226/opengateway/call/simple")
+                    .url("http:///opengateway/call/simple")
                     .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
-                    .body("{\"hzxm\":\"张三\",\"zjh\":\"310101199001130209\"}")
+                    .body("{\"hzxm\":\"张三\",\"zjh\":\"319001130209\"}")
                     .build()
                     .execute();
             System.out.println(response.string());
@@ -81,7 +81,7 @@ public class OpenAPISdkTest {
     public void getAsyncTest() throws Exception {
         IProfile profile = DHPProfile.getProfile("63719546888192", "65203300044800", "xxx");
         DHPHttpClient.get(profile)
-            .url("http://172.16.30.147/opengateway/call/simple")
+            .url("http:///opengateway/call/simple")
             .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
             .build()
             .executeAsync(new StringCallback() {
@@ -105,7 +105,7 @@ public class OpenAPISdkTest {
         DHPHttpClientBuilder dhpHttpClientBuilder = new DHPHttpClientBuilder();
         Response response = dhpHttpClientBuilder.connectTimeout(10, TimeUnit.SECONDS)
                 .build().get(profile)
-                .url("http://172.16.30.147/opengateway/call/simple")
+                .url("http:///opengateway/call/simple")
                 .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
                 .build()
                 .execute();
@@ -118,9 +118,9 @@ public class OpenAPISdkTest {
     public void postTest() throws Exception {
         IProfile profile = DHPProfile.getProfile("57874954723328", "65203300044800", "xxx");
         Response response = DHPHttpClient.post(profile)
-                .url("http://172.16.30.147/opengateway/call/simple")
+                .url("http:///opengateway/call/simple")
                 .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
-                .body("{\"identity\":\"330188888811111511\",\"answers\":{\"a1\":\"0\",\"a2\":\"1\",\"a3\":\"0\",\"a4\":\"1\",\"a5\":\"1\",\"a6\":\"0\",\"a7\":\"1\",\"a8\":\"0\",\"a9\":\"1\",\"a10\":\"0\",\"a11\":\"1\",\"a12\":\"1\",\"a13\":\"0\",\"a14\":\"1\",\"a15\":\"1\",\"a16\":\"0\",\"a17\":\"1\",\"a18\":\"0\",\"a19\":\"1\",\"a20\":\"1\",\"a21\":\"1\",\"a22\":\"1\",\"a23\":\"1\",\"a24\":\"0\",\"a25\":\"0\",\"a26\":\"1\",\"a27\":\"0\",\"a28\":\"1\",\"a29\":\"0\",\"a30\":\"0\"}}")
+                .body("{\"identity\":\"3301888881\",\"answers\":{\"a1\":\"0\",\"a2\":\"1\",\"a3\":\"0\",\"a4\":\"1\",\"a5\":\"1\",\"a6\":\"0\",\"a7\":\"1\",\"a8\":\"0\",\"a9\":\"1\",\"a10\":\"0\",\"a11\":\"1\",\"a12\":\"1\",\"a13\":\"0\",\"a14\":\"1\",\"a15\":\"1\",\"a16\":\"0\",\"a17\":\"1\",\"a18\":\"0\",\"a19\":\"1\",\"a20\":\"1\",\"a21\":\"1\",\"a22\":\"1\",\"a23\":\"1\",\"a24\":\"0\",\"a25\":\"0\",\"a26\":\"1\",\"a27\":\"0\",\"a28\":\"1\",\"a29\":\"0\",\"a30\":\"0\"}}")
                 .build()
                 .execute();
 
@@ -133,7 +133,7 @@ public class OpenAPISdkTest {
     public static void postAsyncTest() {
         IProfile profile = DHPProfile.getProfile("57874954723328", "65203300044800", "xxx");
         DHPHttpClient.post(profile)
-                .url("http://172.16.30.147/opengateway/call/simpl")
+                .url("http:///opengateway/call/simpl")
                 .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
                 .body("{\"identity\":\"330188888811111511\",\"answers\":{\"a1\":\"0\",\"a2\":\"1\",\"a3\":\"0\",\"a4\":\"1\",\"a5\":\"1\",\"a6\":\"0\",\"a7\":\"1\",\"a8\":\"0\",\"a9\":\"1\",\"a10\":\"0\",\"a11\":\"1\",\"a12\":\"1\",\"a13\":\"0\",\"a14\":\"1\",\"a15\":\"1\",\"a16\":\"0\",\"a17\":\"1\",\"a18\":\"0\",\"a19\":\"1\",\"a20\":\"1\",\"a21\":\"1\",\"a22\":\"1\",\"a23\":\"1\",\"a24\":\"0\",\"a25\":\"0\",\"a26\":\"1\",\"a27\":\"0\",\"a28\":\"1\",\"a29\":\"0\",\"a30\":\"0\"}}")
                 .build()
@@ -151,7 +151,7 @@ public class OpenAPISdkTest {
         DHPHttpClientBuilder dhpHttpClientBuilder = new DHPHttpClientBuilder();
         Response response = dhpHttpClientBuilder.connectTimeout(10, TimeUnit.SECONDS)
                 .build().post(profile)
-                .url("http://172.16.30.147/opengateway/call/simple")
+                .url("http:///opengateway/call/simple")
                 .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
                 .body("{\"identity\":\"330188888811111511\",\"answers\":{\"a1\":\"0\",\"a2\":\"1\",\"a3\":\"0\",\"a4\":\"1\",\"a5\":\"1\",\"a6\":\"0\",\"a7\":\"1\",\"a8\":\"0\",\"a9\":\"1\",\"a10\":\"0\",\"a11\":\"1\",\"a12\":\"1\",\"a13\":\"0\",\"a14\":\"1\",\"a15\":\"1\",\"a16\":\"0\",\"a17\":\"1\",\"a18\":\"0\",\"a19\":\"1\",\"a20\":\"1\",\"a21\":\"1\",\"a22\":\"1\",\"a23\":\"1\",\"a24\":\"0\",\"a25\":\"0\",\"a26\":\"1\",\"a27\":\"0\",\"a28\":\"1\",\"a29\":\"0\",\"a30\":\"0\"}}")
                 .build()
@@ -204,7 +204,7 @@ public class OpenAPISdkTest {
                     .url("http://localhost/opengateway/call/simple")
                     .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
                     .body("{" +
-                            "  \"zjh\": \"110101199003078371\"" +
+                            "  \"zjh\": \"11900371\"" +
                             "}")
                     .build()
                     .execute();
