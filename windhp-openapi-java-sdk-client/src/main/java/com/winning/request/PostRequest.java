@@ -52,7 +52,7 @@ public class PostRequest extends OkHttpRequest {
             MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
             addParams(builder);
             fileInfos.forEach(fileInfo -> {
-                RequestBody fileBody = null;
+                RequestBody fileBody;
                 if (fileInfo.file != null) {
                     fileBody = RequestBody.create(fileInfo.file, MediaType.parse("application/octet-stream"));
                 } else if (fileInfo.fileInputStream != null) {
@@ -68,18 +68,12 @@ public class PostRequest extends OkHttpRequest {
             return builder.build();
         }
         if (body != null && body.length() > 0) {
-            MediaType mediaType = null;
-            if (headers.containsKey(SystemHeader.CONTENT_TYPE)) {
-                mediaType = MediaType.parse(headers.get(SystemHeader.CONTENT_TYPE));
-            } else {
-                mediaType = MediaType.parse("text/plain;charset=utf-8");
-            }
+            MediaType mediaType = MediaType.parse(headers.getOrDefault(SystemHeader.CONTENT_TYPE, "text/plain;charset=utf-8"));
             return RequestBody.create(body, mediaType);
         }
         FormBody.Builder builder = new FormBody.Builder();
         addParams(builder);
-        FormBody formBody = builder.build();
-        return formBody;
+        return builder.build();
     }
 
     @Override
@@ -89,19 +83,17 @@ public class PostRequest extends OkHttpRequest {
 
     private void addParams(FormBody.Builder builder) {
         if (params != null) {
-            params.forEach((k, v) -> builder.add(k, v));
+            params.forEach(builder::add);
         }
         if (encodedParams != null) {
-            encodedParams.forEach((k, v) -> builder.addEncoded(k, v));
+            encodedParams.forEach(builder::addEncoded);
         }
     }
 
     private void addParams(MultipartBody.Builder builder) {
         if (params != null && !params.isEmpty()) {
-            params.forEach((k, v) -> {
-                builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + k + "\""),
-                        RequestBody.create(v, null));
-            });
+            params.forEach((k, v) -> builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + k + "\""),
+                    RequestBody.create(v, null)));
         }
     }
 

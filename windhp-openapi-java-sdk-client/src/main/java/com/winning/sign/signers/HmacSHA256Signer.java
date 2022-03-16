@@ -18,7 +18,7 @@ import java.security.NoSuchAlgorithmException;
 public class HmacSHA256Signer extends Signer {
 
     private static final String ALGORITHM_NAME = "HmacSHA256";
-    private static String HASH_SHA256 = "SHA-256";
+    private static final String HASH_SHA256 = "SHA-256";
 
     @Override
     public String signString(String stringToSign, String accessKeySecret) {
@@ -27,9 +27,7 @@ public class HmacSHA256Signer extends Signer {
             SecretKeySpec secretKey = new SecretKeySpec(accessKeySecret.getBytes(), ALGORITHM_NAME);
             hmacSha256.init(secretKey);
             return DatatypeConverter.printBase64Binary(hmacSha256.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8)));
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalArgumentException(e.toString());
-        } catch (InvalidKeyException e) {
+        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
             throw new IllegalArgumentException(e.toString());
         }
     }

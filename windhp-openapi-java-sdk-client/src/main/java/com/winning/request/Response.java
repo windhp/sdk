@@ -15,50 +15,26 @@ import java.util.List;
 public class Response {
 	private okhttp3.Response okhttpResponse;
 	
-	/**
-	 * 
-	 * @param response
-	 */
 	public Response(okhttp3.Response response){
 		this.okhttpResponse =response;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public Request request() {
 		return okhttpResponse.request();
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public Protocol protocol() {
 		return okhttpResponse.protocol();
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public int code() {
 		return okhttpResponse.code();
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public boolean isSuccessful() {
 		return okhttpResponse.isSuccessful();
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public String message() {
 		return okhttpResponse.message();
 	}

@@ -35,10 +35,9 @@ public abstract class StringCallback implements Callback {
 
     /**
      * response字符串成功请求的响应处理
-     * @param call:
-     * @param response:
-     * @param id:
-     * @return: void
+     * @param call call
+     * @param response 响应
+     * @param id requestid
      */
     public abstract void onSuccess(Call call, String response, String id);
 }

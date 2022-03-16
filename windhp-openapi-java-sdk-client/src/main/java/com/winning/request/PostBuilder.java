@@ -24,9 +24,9 @@ import com.winning.request.PostRequest.FileInfo;
  */
 public class PostBuilder extends OkHttpRequestBuilder<PostBuilder> {
 
-    private static Pattern pattern = Pattern.compile("\\s*|\t|\r|\n");
+    private static final Pattern pattern = Pattern.compile("\\s*|\t|\r|\n");
 
-    private List<FileInfo> fileInfos;
+    private final List<FileInfo> fileInfos;
     private String postBody;
     private MultipartBody multipartBody;
 

@@ -93,7 +93,6 @@ public class DHPHttpClient {
 
 	/**
 	 * 取消
-	 * @param tag: tag
 	 */
 	public static void cancel(final Object tag) {
 		cancel(httpClient.getOkHttpClient(), tag);
@@ -101,8 +100,6 @@ public class DHPHttpClient {
 
 	/**
 	 * 取消
-	 * @param okHttpClient:
-	 * @param tag: tag
 	 */
 	public static void cancel(final OkHttpClient okHttpClient,final Object tag) {
 		if (okHttpClient != null && tag!=null) {

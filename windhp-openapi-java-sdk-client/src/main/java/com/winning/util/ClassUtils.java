@@ -33,11 +33,6 @@ public class ClassUtils {
         return map;  
     }
 
-	/**
-	 * 
-	 * @param clazz
-	 * @return
-	 */
 	public static List<Field> getFieldList(Class<?> clazz) {
 		List<Field> fields = new ArrayList<>();
 		Set<String> filedNames = new HashSet<>();

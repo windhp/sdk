@@ -49,7 +49,6 @@ public class DHPHttpClientBuilder {
 	}
 
 	/**
-	 * 
 	 * @param timeout 超时时间
 	 * @param unit 超时单位
 	 * @return DHPHttpClientBuilder
@@ -59,52 +58,26 @@ public class DHPHttpClientBuilder {
 		return this;
 	}
 
-	/**
-	 * 
-	 * @param interval
-	 * @param unit
-	 * @return DHPHttpClientBuilder
-	 */
 	public DHPHttpClientBuilder pingInterval(long interval, TimeUnit unit) {
 		builder.pingInterval(interval, unit);
 		return this;
 	}
 
-	/**
-	 * 
-	 * @param proxy
-	 * @return
-	 */
 	public DHPHttpClientBuilder proxy(Proxy proxy) {
 		builder.proxy(proxy);
 		return this;
 	}
 
-	/**
-	 * 
-	 * @param proxySelector
-	 * @return
-	 */
 	public DHPHttpClientBuilder proxySelector(ProxySelector proxySelector) {
 		builder.proxySelector(proxySelector);
 		return this;
 	}
 
-	/**
-	 * 
-	 * @param cookieJar
-	 * @return
-	 */
 	public DHPHttpClientBuilder cookieJar(CookieJar cookieJar) {
 		builder.cookieJar(cookieJar);
 		return this;
 	}
 
-	/**
-	 * 
-	 * @param cache
-	 * @return
-	 */
 	public DHPHttpClientBuilder cache(Cache cache) {
 		builder.cache(cache);
 		return this;
@@ -120,21 +93,11 @@ public class DHPHttpClientBuilder {
 		return this;
 	}
 
-	/**
-	 * 
-	 * @param socketFactory
-	 * @return
-	 */
 	public DHPHttpClientBuilder socketFactory(SocketFactory socketFactory) {
 		builder.socketFactory(socketFactory);
 		return this;
 	}
 
-	/**
-	 * 
-	 * @param sslSocketFactory
-	 * @return
-	 */
 	@SuppressWarnings("deprecation")
 	public DHPHttpClientBuilder sslSocketFactory(SSLSocketFactory sslSocketFactory) {
 		builder.sslSocketFactory(sslSocketFactory);
@@ -142,21 +105,16 @@ public class DHPHttpClientBuilder {
 	}
 
 	/**
-	 * 
-	 * @param sslSocketFactory
-	 * @param trustManager
-	 * @return
+	 * SSL
+	 * @param sslSocketFactory  sslSocketFactory
+	 * @param trustManager  trustManager
+	 * @return DHPHttpClientBuilder
 	 */
 	public DHPHttpClientBuilder sslSocketFactory(SSLSocketFactory sslSocketFactory, X509TrustManager trustManager) {
 		builder.sslSocketFactory(sslSocketFactory, trustManager);
 		return this;
 	}
 
-	/**
-	 * 
-	 * @param hostnameVerifier
-	 * @return
-	 */
 	public DHPHttpClientBuilder hostnameVerifier(HostnameVerifier hostnameVerifier) {
 		builder.hostnameVerifier(hostnameVerifier);
 		return this;
@@ -222,19 +180,10 @@ public class DHPHttpClientBuilder {
 		return this;
 	}
 
-	/**
-	 *
-	 * @return: okhttp3.OkHttpClient.Builder
-	 */
 	public OkHttpClient.Builder getBuilder() {
 		return builder;
 	}
 	
-	/**
-	 *
-	 * @param sslContext:
-	 * @return: com.winning.DHPHttpClientBuilder
-	 */
 	public DHPHttpClientBuilder sslContext(SSLContext sslContext) {
 		SSLSocketFactory sslSocketFactory = null;
 		final X509TrustManager trustManager=new X509TrustManagerImpl();
@@ -249,10 +198,6 @@ public class DHPHttpClientBuilder {
 		return this;
 	}
 
-	/**
-	 *
-	 * @return: com.winning.request.HttpClient
-	 */
 	public HttpClient build() {
 		return new HttpClient(builder.build());
 	}

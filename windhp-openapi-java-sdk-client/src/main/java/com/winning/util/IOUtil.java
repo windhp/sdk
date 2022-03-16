@@ -18,7 +18,7 @@ import java.util.zip.*;
  * @date 2022/1/7 16:11
  */
 public class IOUtil {
-	private static Log logger = LogFactory.getLog(IOUtil.class);
+	private static final Log logger = LogFactory.getLog(IOUtil.class);
 	private static final int CACHE_SIZE = 512;
 
 
@@ -140,17 +140,11 @@ public class IOUtil {
 		return count;
 	}
 
-	/**
-	 * 
-	 * @param in
-	 * @return
-	 * @throws IOException
-	 */
 	public static String getContent(InputStream in) throws IOException {
 		try (InputStreamReader isr = new InputStreamReader(in);
-				BufferedReader br = new BufferedReader(isr);) {
+				BufferedReader br = new BufferedReader(isr)) {
 			StringBuilder sb = new StringBuilder();
-			String s = null;
+			String s;
 			while ((s = br.readLine()) != null) {
 				sb.append(s).append("\n");
 			}
@@ -161,7 +155,7 @@ public class IOUtil {
 	public static List<String> getContentList(InputStream inStream)throws IOException{
 		List<String> inputLines = new ArrayList<>();
 		BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
-		String line = null;
+		String line;
 		while ((line = br.readLine()) != null) {
 			inputLines.add(line);
 		}
@@ -170,8 +164,8 @@ public class IOUtil {
 
 	public static void unzip(File file, File destFolder) throws IOException {
 		final int buffer=2048;
-		BufferedOutputStream dest = null;
-		BufferedInputStream is = null;
+		BufferedOutputStream dest;
+		BufferedInputStream is;
 		ZipEntry entry;
 		try(ZipFile zipfile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> e = zipfile.entries();
@@ -297,7 +291,7 @@ public class IOUtil {
 			throws IOException {
 		char[] buffer = new char[1024 * 4];
 		long count = 0;
-		int n = 0;
+		int n;
 		while (-1 != (n = input.read(buffer))) {
 			output.write(buffer, 0, n);
 			count += n;

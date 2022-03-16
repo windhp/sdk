@@ -8,7 +8,7 @@ public class DHPProfile implements IProfile {
 
     private static DHPProfile profile;
 
-    private ApiClient apiClient;
+    private final ApiClient apiClient;
 
     private DHPProfile(ApiClient apiClient) {
         this.apiClient = apiClient;

@@ -132,7 +132,7 @@ public abstract class OkHttpRequest {
         String xCaTimestamp = headers.get(SystemHeader.X_CA_TIMESTAMP);
         String xContentMd5 = headers.get(SystemHeader.X_CONENT_MD5);
         String xServiceCode = headers.get(SystemHeader.X_SERVICE_CODE);
-        String stringSign = method + Constants.LF +
+        return method + Constants.LF +
                 contentType +
                 Constants.LF +
                 SystemHeader.X_CA_KEY.toLowerCase() + Constants.COLON + xCaKey + Constants.AND_MARK +
@@ -140,7 +140,6 @@ public abstract class OkHttpRequest {
                 SystemHeader.X_CA_TIMESTAMP.toLowerCase() + Constants.COLON + xCaTimestamp + Constants.AND_MARK +
                 SystemHeader.X_CONENT_MD5.toLowerCase() + Constants.COLON + xContentMd5 + Constants.AND_MARK +
                 SystemHeader.X_SERVICE_CODE.toLowerCase() + Constants.COLON + xServiceCode;
-        return stringSign;
     }
 
 

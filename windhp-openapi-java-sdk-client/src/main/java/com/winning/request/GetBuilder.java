@@ -50,7 +50,7 @@ public class GetBuilder extends OkHttpRequestBuilder<GetBuilder> {
             builder.append(k);
             builder.append(Constants.EQUAL_MARK).append(v);
         });
-        return url + builder.toString();
+        return url + builder;
     }
 
     protected String getParamsMd5(String url) {
@@ -59,7 +59,7 @@ public class GetBuilder extends OkHttpRequestBuilder<GetBuilder> {
         }
         String uri = url.substring(url.indexOf(Constants.QUESTION_MARK));
         String[] split = uri.split(Constants.AND_MARK);
-        if (split == null || split.length == 0) {
+        if (split.length == 0) {
             return MessageDigestUtil.base64AndMd5(Constants.EMPTY_STRING);
         }
         Map<String, String> uriMap = new TreeMap<>();

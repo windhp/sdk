@@ -1,12 +1,11 @@
 package com.winning.sign.signers;
 
-import com.winning.constant.Constants;
 import com.winning.sign.Signer;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -23,14 +22,10 @@ public class HmacSHA1Signer extends Signer {
     public String signString(String stringToSign, String accessKeySecret) {
         try {
             Mac mac = Mac.getInstance(ALGORITHM_NAME);
-            mac.init(new SecretKeySpec(accessKeySecret.getBytes(Constants.ENCODING_UTF8), ALGORITHM_NAME));
-            byte[] signData = mac.doFinal(stringToSign.getBytes(Constants.ENCODING_UTF8));
+            mac.init(new SecretKeySpec(accessKeySecret.getBytes(StandardCharsets.UTF_8), ALGORITHM_NAME));
+            byte[] signData = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
             return DatatypeConverter.printBase64Binary(signData);
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalArgumentException(e.toString());
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalArgumentException(e.toString());
-        } catch (InvalidKeyException e) {
+        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
             throw new IllegalArgumentException(e.toString());
         }
     }
@@ -42,7 +37,7 @@ public class HmacSHA1Signer extends Signer {
     }
 
     @Override
-    public byte[] hash(byte[] raw) throws NoSuchAlgorithmException {
+    public byte[] hash(byte[] raw) {
         return null;
     }
 

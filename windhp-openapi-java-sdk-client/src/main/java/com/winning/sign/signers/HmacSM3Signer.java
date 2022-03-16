@@ -11,6 +11,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -22,22 +23,18 @@ import java.security.NoSuchAlgorithmException;
 public class HmacSM3Signer extends Signer {
 
     private static final String ALGORITHM_NAME = "HMAC-SM3";
-    private static String HASH_SM3 = "SM3";
+    private static final String HASH_SM3 = "SM3";
 
     @Override
     public String signString(String stringToSign, String accessKeySecret) {
-        try {
-            SecretKey key = new SecretKeySpec((accessKeySecret).getBytes(Constants.ENCODING_UTF8), ALGORITHM_NAME);
-            HMac mac = new HMac(new SM3Digest());
-            byte[] sign = new byte[mac.getMacSize()];
-            byte[] inputBytes = stringToSign.getBytes(Constants.ENCODING_UTF8);
-            mac.init(new KeyParameter(key.getEncoded()));
-            mac.update(inputBytes, 0, inputBytes.length);
-            mac.doFinal(sign, 0);
-            return DatatypeConverter.printBase64Binary(sign);
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalArgumentException(e.toString());
-        }
+        SecretKey key = new SecretKeySpec((accessKeySecret).getBytes(StandardCharsets.UTF_8), ALGORITHM_NAME);
+        HMac mac = new HMac(new SM3Digest());
+        byte[] sign = new byte[mac.getMacSize()];
+        byte[] inputBytes = stringToSign.getBytes(StandardCharsets.UTF_8);
+        mac.init(new KeyParameter(key.getEncoded()));
+        mac.update(inputBytes, 0, inputBytes.length);
+        mac.doFinal(sign, 0);
+        return DatatypeConverter.printBase64Binary(sign);
     }
 
     @Override
