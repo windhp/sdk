@@ -82,6 +82,7 @@ _-Dfile(jar包所在路径)；_
 1. 创建IProfile实例并初始化。
 2. 创建API请求并设置参数。
 3. 发起请求并处理应答或异常。
+4. 注意，调试使用的okhttp3的version:4.9.2,低版本可能会报错。
 
 ```java
 package com.winning;
