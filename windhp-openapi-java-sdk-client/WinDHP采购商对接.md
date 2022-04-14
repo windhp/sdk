@@ -105,6 +105,14 @@ public class Main {
                     //测试地址-（生产地址用户中心的已购产品列表-地址 查看）
                     .url("http:/域名/opengateway/call/simple")
                     .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
+                    //Win-Biz-Code值来源于《WinDHP接口规范***.docx》目录3.*.*.*的操作名称
+                    .addHeader("Win-Biz-Code","Q_CZKSXX")
+                    //body是json格式，值来源于《WinDHP接口规范***.docx》目录3.*.*.*的输入参数
+                    .body("{" +
+                            "  \"ksrq\": \"20220304\",\n" +
+                            "  \"jsrq\": \"20220305\",\n" +
+                            "  \"jzqd\": \"\"" +
+                            "}")
                     .build()
                     .execute();
             System.out.println(response.string());
