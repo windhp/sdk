@@ -73,6 +73,13 @@ _-Dfile(jar包所在路径)；_
     <artifactId>bcprov-jdk15on</artifactId>
     <version>1.69</version>
 </dependency>
+
+<dependency>
+    <groupId>com.squareup.okhttp3</groupId>
+    <artifactId>okhttp</artifactId>
+    <version>4.9.2</version>
+</dependency>
+
 ```
 
 
