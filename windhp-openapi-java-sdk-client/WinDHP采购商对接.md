@@ -40,7 +40,8 @@ WinDHP SDK for Java按照WinDHP的签名规则，进行了封装，使用者只�
 ### 1.1 安装依赖
 作为采购商，使用 WinDHP SDK for Java，只需要添加依赖`windhp-openapi-java-sdk-client`。
 
-_联系WinDHP运营人员，获取 windhp-openapi-java-sdk-client-1.0.0.jar 包；_
+获取 windhp-openapi-java-sdk-client-1.0.0.jar:
+[windhp-openapi-java-sdk-client-1.0.0.jar下载链接](https://gitee.com/windhp-sdk/windhp-openapi-java-sdk/releases/V1.0.0) 
 
 ##### 通过Maven来管理项目依赖(推荐)
 
