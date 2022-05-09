@@ -148,7 +148,18 @@ public class Main {
 
 ### 2.1 X-Conent-MD5生成规则
 
-对请求参数先进行MD5摘要再进行Base64编码获取摘要字符串，用于校验QueryParams/Body参数是否被篡改
+首先对请求参数进行预处理，postBody 为请求参数
+``` java
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+private static Pattern pattern = Pattern.compile("\\s*|\t|\r|\n");
+
+    Matcher m = pattern.matcher(postBody);
+    String formatbody = m.replaceAll("");
+```
+
+再对请求参数先进行MD5摘要再进行Base64编码获取摘要字符串，用于校验QueryParams/Body参数是否被篡改
 
 （post请求为body内容，get/delete请求为url参数（**按照字典排序**）)
 
