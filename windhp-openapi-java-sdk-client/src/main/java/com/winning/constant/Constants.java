@@ -62,6 +62,11 @@ public class Constants {
     public static final String APPLICATION_JSON = "application/json; charset=utf-8";
 
     /**
+     * APPLICATION_FORM_URLENCODED
+     */
+    public static final String APPLICATION_FORM_URLENCODED = "application/x-www-form-urlencoded";
+
+    /**
      * http响应码500
      */
     public static final int SERVER_ERROR_HTTPCODE = 500;

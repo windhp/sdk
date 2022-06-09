@@ -3,11 +3,17 @@ package com.winning.request;
 
 import com.winning.constant.Constants;
 import com.winning.constant.SystemHeader;
+import com.winning.exceptions.ClientException;
 import com.winning.profile.IProfile;
 import com.winning.util.MessageDigestUtil;
 import okhttp3.OkHttpClient;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -16,6 +22,7 @@ import java.util.*;
  */
 public class GetBuilder extends OkHttpRequestBuilder<GetBuilder> {
 
+    public static Log logger = LogFactory.getLog(GetBuilder.class);
 
     public GetBuilder(OkHttpClient httpClient) {
         super(httpClient);
@@ -26,7 +33,7 @@ public class GetBuilder extends OkHttpRequestBuilder<GetBuilder> {
     }
 
     @Override
-    public RequestCall build() {
+    public RequestCall build() throws ClientException{
         if (params != null) {
             url = appendParams(url, params);
         }
@@ -53,7 +60,7 @@ public class GetBuilder extends OkHttpRequestBuilder<GetBuilder> {
         return url + builder;
     }
 
-    protected String getParamsMd5(String url) {
+    protected String getParamsMd5(String url) throws ClientException {
         if (url == null || !url.contains(Constants.QUESTION_MARK)) {
             return MessageDigestUtil.base64AndMd5(Constants.EMPTY_STRING);
         }
@@ -73,11 +80,17 @@ public class GetBuilder extends OkHttpRequestBuilder<GetBuilder> {
         }
         uriMap.putAll(params);
         List<String> queryList = new ArrayList<>(split.length);
-        for (Map.Entry<String, String> entry : uriMap.entrySet()) {
-            queryList.add(String.format("%s=%s", entry.getKey(), entry.getValue()));
+        try {
+            for (Map.Entry<String, String> entry : uriMap.entrySet()) {
+                queryList.add(String.format("%s=%s", entry.getKey(), URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.name())));
+            }
+        } catch (
+            UnsupportedEncodingException e) {
+            throw new ClientException( "UnsupportedEncodingException:" + e.getMessage());
         }
-
-        return MessageDigestUtil.base64AndMd5(StringUtils.join(queryList, Constants.AND_MARK));
+        String md5Content = StringUtils.join(queryList, Constants.AND_MARK);
+        logger.debug("MD5 Content :" + md5Content);
+        return MessageDigestUtil.base64AndMd5(md5Content);
     }
 
 }

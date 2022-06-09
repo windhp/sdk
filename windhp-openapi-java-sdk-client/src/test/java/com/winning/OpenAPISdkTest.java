@@ -27,6 +27,49 @@ import java.util.concurrent.TimeUnit;
 public class OpenAPISdkTest {
 
     @Test
+    public void MyTest(){
+        // 产品：主数据
+        //https://openapi.windhp.com/call/simple
+        // 接口调用 Q_SQDMBXX 查询申请单模板信息
+        String serviceCode = "48971667513344";
+        serviceCode = "e700a5b2549ab5bbb51a776e651393aa#GETMZHZZJH";
+        String appkey = "68929467060224";
+        String appSecret = "7GUc4gKGkbsYtHk40GD4dkTKnnqsWvD4";
+        String url = "http://localhost:7070/call/simple";
+        IProfile profile = DHPProfile.getProfile(serviceCode, appkey, appSecret);
+        try {
+            long time1 = System.currentTimeMillis();
+            Response response = DHPHttpClient.post(profile)
+//                    .addHeader(SystemHeader.CONTENT_TYPE, "application/x-www-form-urlencoded")
+                    .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
+                    .url(url)
+                    .addHeader("Win-Biz-Code","GETMZHZZJH")
+                    .addHeader("Win-Region-Id","100021")
+                    .addParams("yydm","100021")
+                    .addParams("action","GETMZHZZJH")
+                    .addParams("hzxm","周远杰")
+                    .addParams("zjh","452421198002151618")
+                    .body("{" +
+                            "  \"zjh\": \"119003078371\"" +
+                            "}")
+                    .build()
+                    .execute();
+            long time2 = System.currentTimeMillis();
+            System.out.println(response.string());
+            System.out.println("耗时：" + (int)(time2-time1));
+            Assert.assertEquals(response.code(), 200);
+            Assert.assertTrue(StringUtils.isEmpty(response.getCaErrorMessage()));
+            Assert.assertTrue(StringUtils.isNoneEmpty(response.getTraceId()));
+        } catch (ServerException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } catch (ClientException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void getNaliTest(){
         IProfile profile = DHPProfile.getProfile("41563211440128", "62989828116480", "xxx");
         try {
@@ -132,17 +175,21 @@ public class OpenAPISdkTest {
 
     public static void postAsyncTest() {
         IProfile profile = DHPProfile.getProfile("57874954723328", "65203300044800", "xxx");
-        DHPHttpClient.post(profile)
-                .url("http:///opengateway/call/simpl")
-                .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
-                .body("{\"identity\":\"330188888811111511\",\"answers\":{\"a1\":\"0\",\"a2\":\"1\",\"a3\":\"0\",\"a4\":\"1\",\"a5\":\"1\",\"a6\":\"0\",\"a7\":\"1\",\"a8\":\"0\",\"a9\":\"1\",\"a10\":\"0\",\"a11\":\"1\",\"a12\":\"1\",\"a13\":\"0\",\"a14\":\"1\",\"a15\":\"1\",\"a16\":\"0\",\"a17\":\"1\",\"a18\":\"0\",\"a19\":\"1\",\"a20\":\"1\",\"a21\":\"1\",\"a22\":\"1\",\"a23\":\"1\",\"a24\":\"0\",\"a25\":\"0\",\"a26\":\"1\",\"a27\":\"0\",\"a28\":\"1\",\"a29\":\"0\",\"a30\":\"0\"}}")
-                .build()
-                .executeAsync(new StringCallback() {
-                    @Override
-                    public void onSuccess(Call call, String response, String id) {
-                        System.out.println(response);
-                    }
-                });
+        try {
+            DHPHttpClient.post(profile)
+                    .url("http:///opengateway/call/simpl")
+                    .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
+                    .body("{\"identity\":\"330188888811111511\",\"answers\":{\"a1\":\"0\",\"a2\":\"1\",\"a3\":\"0\",\"a4\":\"1\",\"a5\":\"1\",\"a6\":\"0\",\"a7\":\"1\",\"a8\":\"0\",\"a9\":\"1\",\"a10\":\"0\",\"a11\":\"1\",\"a12\":\"1\",\"a13\":\"0\",\"a14\":\"1\",\"a15\":\"1\",\"a16\":\"0\",\"a17\":\"1\",\"a18\":\"0\",\"a19\":\"1\",\"a20\":\"1\",\"a21\":\"1\",\"a22\":\"1\",\"a23\":\"1\",\"a24\":\"0\",\"a25\":\"0\",\"a26\":\"1\",\"a27\":\"0\",\"a28\":\"1\",\"a29\":\"0\",\"a30\":\"0\"}}")
+                    .build()
+                    .executeAsync(new StringCallback() {
+                        @Override
+                        public void onSuccess(Call call, String response, String id) {
+                            System.out.println(response);
+                        }
+                    });
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -227,21 +274,25 @@ public class OpenAPISdkTest {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    DHPHttpClient.get().url("http://localhost:8077/standard/test?organ_id=" + j).build().executeAsync(new StringCallback() {
-                        @Override
-                        public void onResponse(Call call, Response response, String id) {
-                            HttpUrl url = call.request().url();
-                            try {
-                                String string = response.body().string();
-                                System.out.println(url + "==" + string);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                    try {
+                        DHPHttpClient.get().url("http://localhost:8077/standard/test?organ_id=" + j).build().executeAsync(new StringCallback() {
+                            @Override
+                            public void onResponse(Call call, Response response, String id) {
+                                HttpUrl url = call.request().url();
+                                try {
+                                    String string = response.body().string();
+                                    System.out.println(url + "==" + string);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-                        @Override
-                        public void onSuccess(Call call, String response, String id) {
-                        }
-                    });
+                            @Override
+                            public void onSuccess(Call call, String response, String id) {
+                            }
+                        });
+                    } catch (ClientException e) {
+                        e.printStackTrace();
+                    }
                 }
             }).start();
             System.out.println();

@@ -1,5 +1,6 @@
 package com.winning.request;
 
+import com.winning.constant.Constants;
 import com.winning.constant.SystemHeader;
 import com.winning.exceptions.ClientException;
 import com.winning.profile.IProfile;
@@ -10,19 +11,26 @@ import okhttp3.OkHttpClient;
 import java.io.File;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.winning.request.PostRequest.FileInfo;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * @author xch
  * @date 2022/1/7 16:01
  */
 public class PostBuilder extends OkHttpRequestBuilder<PostBuilder> {
+
+    public static Log logger = LogFactory.getLog(PostBuilder.class);
 
     private static final Pattern pattern = Pattern.compile("\\s*|\t|\r|\n");
 
@@ -40,7 +48,7 @@ public class PostBuilder extends OkHttpRequestBuilder<PostBuilder> {
     }
 
     @Override
-    public RequestCall build(){
+    public RequestCall build() throws ClientException{
         String md5 = getBodyMd5(postBody);
         headers.put(SystemHeader.X_CONENT_MD5, md5);
         headers.put(SystemHeader.HTTP_METHOD, MethodType.POST.name());
@@ -110,13 +118,29 @@ public class PostBuilder extends OkHttpRequestBuilder<PostBuilder> {
         return addFile(partName, fileName,content);
     }
 
-    protected  String getBodyMd5(String postBody){
+    protected  String getBodyMd5(String postBody) throws ClientException{
+        if (Constants.APPLICATION_FORM_URLENCODED.equals(headers.get(SystemHeader.CONTENT_TYPE))) {
+            if (params == null || params.size() == 0) {
+                return MessageDigestUtil.base64AndMd5("");
+            }
+            List<String> queryList = new ArrayList<>(params.size());
+            try {
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    queryList.add(String.format("%s=%s", entry.getKey(), URLEncoder.encode(entry.getValue(),StandardCharsets.UTF_8.name())));
+                }
+            } catch (UnsupportedEncodingException e) {
+                throw new ClientException( "UnsupportedEncodingException:" + e.getMessage());
+            }
+            String md5Content = StringUtils.join(queryList, Constants.AND_MARK);
+            logger.debug(" POST md5Content :" + md5Content);
+            return MessageDigestUtil.base64AndMd5(md5Content);
+        }
         if (postBody == null || postBody.isEmpty()) {
             return MessageDigestUtil.base64AndMd5("");
         }
         Matcher m = pattern.matcher(postBody);
         String formatbody = m.replaceAll("");
+        logger.debug(" POST md5Content :" + formatbody);
         return MessageDigestUtil.base64AndMd5(formatbody);
     }
-
 }
