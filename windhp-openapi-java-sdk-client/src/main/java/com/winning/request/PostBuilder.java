@@ -52,7 +52,7 @@ public class PostBuilder extends OkHttpRequestBuilder<PostBuilder> {
         String md5 = getBodyMd5(postBody);
         headers.put(SystemHeader.X_CONENT_MD5, md5);
         headers.put(SystemHeader.HTTP_METHOD, MethodType.POST.name());
-
+        encodedParamsUrl();
         return new PostRequest(
                 url,
                 tag,
@@ -65,6 +65,19 @@ public class PostBuilder extends OkHttpRequestBuilder<PostBuilder> {
                 profile,
                 id).
                 build(httpClient);
+    }
+
+    private void encodedParamsUrl() throws ClientException{
+        if (params == null || params.isEmpty()) {
+            return;
+        }
+        if (!this.url.contains(Constants.QUESTION_MARK)) {
+            this.url += Constants.QUESTION_MARK;
+        }
+        if (!this.url.endsWith(Constants.AND_MARK)) {
+            this.url += Constants.AND_MARK;
+        }
+        this.url += getUrlString(params);
     }
 
     public PostBuilder body(String postBody) {
@@ -123,15 +136,7 @@ public class PostBuilder extends OkHttpRequestBuilder<PostBuilder> {
             if (params == null || params.size() == 0) {
                 return MessageDigestUtil.base64AndMd5("");
             }
-            List<String> queryList = new ArrayList<>(params.size());
-            try {
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    queryList.add(String.format("%s=%s", entry.getKey(), URLEncoder.encode(entry.getValue(),StandardCharsets.UTF_8.name())));
-                }
-            } catch (UnsupportedEncodingException e) {
-                throw new ClientException( "UnsupportedEncodingException:" + e.getMessage());
-            }
-            String md5Content = StringUtils.join(queryList, Constants.AND_MARK);
+            String md5Content = getUrlString(params);
             logger.debug(" POST md5Content :" + md5Content);
             return MessageDigestUtil.base64AndMd5(md5Content);
         }
@@ -142,5 +147,18 @@ public class PostBuilder extends OkHttpRequestBuilder<PostBuilder> {
         String formatbody = m.replaceAll("");
         logger.debug(" POST md5Content :" + formatbody);
         return MessageDigestUtil.base64AndMd5(formatbody);
+    }
+
+    private String getUrlString(final Map<String, String> params) throws ClientException {
+        List<String> queryList = new ArrayList<>();
+        try {
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                queryList.add(String.format("%s=%s", URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8.name()),
+                        URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.name())));
+            }
+        } catch (UnsupportedEncodingException e) {
+            throw new ClientException( "UnsupportedEncodingException:" + e.getMessage());
+        }
+        return StringUtils.join(queryList, Constants.AND_MARK);
     }
 }
