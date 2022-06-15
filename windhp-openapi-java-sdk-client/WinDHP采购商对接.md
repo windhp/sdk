@@ -161,7 +161,7 @@ private static Pattern pattern = Pattern.compile("\\s*|\t|\r|\n");
 import org.apache.commons.codec.binary.Base64;
 import java.security.MessageDigest;
 
-String content-MD5 = Base64.encodeBase64(MD5(body.getbytes("UTF-8")));
+String content-MD5 = Base64.encodeBase64(base64AndMd5(body.getbytes("UTF-8")));
 
 public static String base64AndMd5(String str) {
       if (str == null) {
