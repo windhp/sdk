@@ -3,12 +3,12 @@
 ## 对接WinDHP环境要求
 
 1. 您需要一个WinDHP账号以及一对`AppKey`和`AppSecret`。
-   请在WinDHP数字健康平台的[WinDHP用户中心注册页](https://www.windhp.com/windhp/crm/#/register) 上注册账户 或者 联系WinDHP运营人员给您分配账户。
-   拥有账户后即可在[WinDHP用户中心登录页](https://www.windhp.com/windhp/crm/#/login) 进行登录。
+   请在WinDHP数字健康平台的[WinDHP用户中心注册页](https://www.windhp.com/windhp/crm/register) 上注册账户 或者 联系WinDHP运营人员给您分配账户。
+   拥有账户后即可在[WinDHP用户中心登录页](https://www.windhp.com/windhp/crm/login) 进行登录。
 
 2. 要对接联调WinDHP的某个产品的API，您需要事先在[WinDHP云市场](https://www.windhp.com//windhp/market) 中搜索购买或订阅这个产品;（如果购买不了请联系WinDHP运营人员,可能存在某些限制条件）
 
-3. 购买或订阅产品之后，即可在[WinDHP用户中心-采购商中心的 订单管理-已购产品](https://www.windhp.com/windhp/crm/#/service) 菜单页看到已购产品；
+3. 购买或订阅产品之后，即可在[WinDHP用户中心-采购商中心的 订单管理-已购产品](https://www.windhp.com/windhp/crm/service) 菜单页看到已购产品；
 
 详情见下图：
 ![avatar][base64str]
