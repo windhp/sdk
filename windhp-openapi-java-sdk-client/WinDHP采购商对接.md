@@ -142,14 +142,18 @@ public class Main {
 
 ### 2.1 X-Conent-MD5生成规则
 
-首先对请求参数进行预处理，postBody 为请求参数
+**首先对请求参数进行预处理，要把一些特殊字符（空格、制表符\t、回车\r、换行\n）去除;**
+
+postBody为请求参数
+
 ``` java
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 private static Pattern pattern = Pattern.compile("\\s*|\t|\r|\n");
-
+    //匹配特殊字符
     Matcher m = pattern.matcher(postBody);
+    //特殊字符替换为空字符
     String formatbody = m.replaceAll("");
 ```
 
