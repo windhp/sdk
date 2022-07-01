@@ -107,7 +107,7 @@
 							"}\r",
 							"\r",
 							"function compressJsonStr(jsonStr) {\r",
-							"  return JSON.stringify(JSON.parse(jsonStr));\r",
+							"  return JSON.stringify(JSON.parse(jsonStr.replace(/(\\s)|(\\t)|(\\r)|(\\n)/g,'')));\r",
 							"}"
 						],
 						"type": "text/javascript"
