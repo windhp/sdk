@@ -301,16 +301,16 @@ postman自动化脚本下载地址：
 ## 1、安装依赖
 作为采购商，使用 WinDHP SDK for Java，只需要添加依赖`windhp-openapi-java-sdk-client`。
 
-获取 windhp-openapi-java-sdk-client-1.0.1.jar:
-[windhp-openapi-java-sdk-client-1.0.1.jar下载链接](https://gitee.com/windhp-sdk/windhp-openapi-java-sdk/releases/V1.0.1)
+获取 windhp-openapi-java-sdk-client-1.0.2.jar:
+[windhp-openapi-java-sdk-client-1.0.2.jar下载链接](https://gitee.com/windhp-sdk/windhp-openapi-java-sdk/releases/V1.0.2)
 
 **通过Maven来管理项目依赖(推荐)**
 
 如果您使用Apache Maven来管理Java项目，只需在项目的`pom.xml`文件加入相应的依赖项即可。
 
-但首先需要把windhp-openapi-java-sdk-client-1.0.1.jar包，使用如下命令安装到自己私有Maven仓库；
+但首先需要把windhp-openapi-java-sdk-client-1.0.2.jar包，使用如下命令安装到自己私有Maven仓库；
 ```cmd
-mvn install:install-file -DgroupId=com.winning -DartifactId=windhp-openapi-java-sdk-client -Dversion=1.0.1 -Dpackaging=jar -Dfile=D://windhp-openapi-java-sdk-client-1.0.1.jar
+mvn install:install-file -DgroupId=com.winning -DartifactId=windhp-openapi-java-sdk-client -Dversion=1.0.2 -Dpackaging=jar -Dfile=D://windhp-openapi-java-sdk-client-1.0.2.jar
 ```
 > -Dfile(jar包所在路径)；
 
@@ -319,7 +319,7 @@ mvn install:install-file -DgroupId=com.winning -DartifactId=windhp-openapi-java-
 <dependency>
     <groupId>com.winning</groupId>
     <artifactId>windhp-openapi-java-sdk-client</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
