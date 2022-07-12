@@ -6,7 +6,7 @@
 
     <groupId>com.winning</groupId>
     <artifactId>windhp-openapi-java-sdk-client</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <description>WinDHP Open API SDK for Java</description>
 
     <properties>
