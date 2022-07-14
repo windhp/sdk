@@ -64,7 +64,7 @@ public class GetBuilder extends OkHttpRequestBuilder<GetBuilder> {
         if (url == null || !url.contains(Constants.QUESTION_MARK)) {
             return MessageDigestUtil.base64AndMd5(Constants.EMPTY_STRING);
         }
-        String uri = url.substring(url.indexOf(Constants.QUESTION_MARK + 1));
+        String uri = url.substring(url.indexOf(Constants.QUESTION_MARK) + 1);
         String[] split = uri.split(Constants.AND_MARK);
         if (split.length == 0) {
             return MessageDigestUtil.base64AndMd5(Constants.EMPTY_STRING);

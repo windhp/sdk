@@ -26,16 +26,16 @@ import java.util.concurrent.TimeUnit;
  */
 public class OpenAPISdkTest {
 
-    @Test
+    //@Test
     public void MyTest(){
         // 产品：主数据
         //https://openapi.windhp.com/call/simple
         // 接口调用 Q_SQDMBXX 查询申请单模板信息
-        String serviceCode = "48971667513344";
-        serviceCode = "e700a5b2549ab5bbb51a776e651393aa#GETMZHZZJH";
-        String appkey = "68929467060224";
-        String appSecret = "7GUc4gKGkbsYtHk40GD4dkTKnnqsWvD4";
-        String url = "http://localhost:7070/call/simple";
+        String serviceCode = "#ECT";
+        serviceCode = "000#Q_CONNECT";
+        String appkey = "000";
+        String appSecret = "000";
+        String url = "https://openapi.windhp.com/call/simple";
         IProfile profile = DHPProfile.getProfile(serviceCode, appkey, appSecret);
         try {
             long time1 = System.currentTimeMillis();
@@ -43,15 +43,7 @@ public class OpenAPISdkTest {
 //                    .addHeader(SystemHeader.CONTENT_TYPE, "application/x-www-form-urlencoded")
                     .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
                     .url(url)
-                    .addHeader("Win-Biz-Code","GETMZHZZJH")
-                    .addHeader("Win-Region-Id","100021")
-                    .addParams("yydm","100021")
-                    .addParams("action","GETMZHZZJH")
-                    .addParams("hzxm","周远杰")
-                    .addParams("zjh","452421198002151618")
-                    .body("{" +
-                            "  \"zjh\": \"119003078371\"" +
-                            "}")
+                    .body("{}")
                     .build()
                     .execute();
             long time2 = System.currentTimeMillis();
@@ -69,7 +61,7 @@ public class OpenAPISdkTest {
         }
     }
 
-    @Test
+    //@Test
     public void getNaliTest(){
         IProfile profile = DHPProfile.getProfile("41563211440128", "62989828116480", "xxx");
         try {
@@ -96,7 +88,7 @@ public class OpenAPISdkTest {
 
 
 
-    @Test
+    //@Test
     public void getTest(){
         IProfile profile = DHPProfile.getProfile("", "", "");
         try {
@@ -120,7 +112,7 @@ public class OpenAPISdkTest {
     }
 
 
-    @Test
+    //@Test
     public void getAsyncTest() throws Exception {
         IProfile profile = DHPProfile.getProfile("63719546888192", "65203300044800", "xxx");
         DHPHttpClient.get(profile)
@@ -142,7 +134,7 @@ public class OpenAPISdkTest {
             });
     }
 
-    @Test
+    //@Test
     public void getBuilder() throws Exception  {
         DHPProfile profile = DHPProfile.getProfile("63719546888192", "65203300044800", "xxx");
         DHPHttpClientBuilder dhpHttpClientBuilder = new DHPHttpClientBuilder();
@@ -157,7 +149,7 @@ public class OpenAPISdkTest {
         Assert.assertTrue(StringUtils.isNoneEmpty(response.getTraceId()));
     }
 
-    @Test
+    //@Test
     public void postTest() throws Exception {
         IProfile profile = DHPProfile.getProfile("57874954723328", "65203300044800", "xxx");
         Response response = DHPHttpClient.post(profile)
@@ -192,7 +184,7 @@ public class OpenAPISdkTest {
         }
     }
 
-    @Test
+    //@Test
     public void postBuilder() throws Exception  {
         IProfile profile = DHPProfile.getProfile("57874954723328", "65203300044800", "xxx");
         DHPHttpClientBuilder dhpHttpClientBuilder = new DHPHttpClientBuilder();
@@ -219,7 +211,7 @@ public class OpenAPISdkTest {
      * @throws CertificateException
      * @throws UnrecoverableKeyException
      */
-    @Test
+    //@Test
     public void getHttpsTestt() throws ClientException, IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, CertificateException, UnrecoverableKeyException {
         X509TrustManager myTrustManager = new X509TrustManager() {
             @Override
