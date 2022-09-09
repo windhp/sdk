@@ -56,12 +56,12 @@
 | X-Ca-Key  |  请求头X-Ca-Key，取值三要素之一 **AppKey** |
 | X-Ca-Nonce  | 请求头X-Ca-Nonce，请求唯一标识，每次请求保证唯一，通常使用UUID即可 |
 | X-Ca-Timestamp  | 请求头X-Ca-Timestamp，发起请求时的时间戳，值为当前时间的毫秒数（即从1970年1月1日到当前的间隔时间的毫秒数） |
-| X-Content-MD5 | 请求头X-Content-MD5，对请求参数先进行MD5摘要再进行Base64编码获取摘要字符串；<font color=red>具体参考(三-1)章节：请求头X-Content-MD5详解</font>|
+| X-Conent-MD5 | 请求头X-Conent-MD5，对请求参数先进行MD5摘要再进行Base64编码获取摘要字符串；<font color=red>具体参考(三-1)章节：请求头X-Conent-MD5详解</font>|
 | X-Ca-Signature| 按照特定规则对特定的HTTP请求头，进行签名算法计算的结果； <font color=red>具体参考(三-2)章节：请求头X-Ca-Signature详解</font> |
 
-# 三、请求头X-Content-MD5、X-Ca-Signature详解
+# 三、请求头X-Conent-MD5、X-Ca-Signature详解
 
-## 1、请求头X-Content-MD5 详解
+## 1、请求头X-Conent-MD5 详解
 
 > 对于HTTP请求，分为POST、GET、DELETE、PUT请求类型；
 
@@ -121,9 +121,9 @@ public static String resolveQueryParamsFromRequest(Map<String, String> queryPara
 }
 ```
 
-### 1.2 对参数MD5摘要以及Base64编码得到X-Content-MD5的值
+### 1.2 对参数MD5摘要以及Base64编码得到X-Conent-MD5的值
 
-Http请求的参数经过预处理后，便可以进行MD5摘要和Base64编码，得到的结果就是**请求头X-Content-MD5的值**
+Http请求的参数经过预处理后，便可以进行MD5摘要和Base64编码，得到的结果就是**请求头X-Conent-MD5的值**
 
 java代码示例：
 ```java
@@ -136,7 +136,7 @@ import java.util.Base64;
 /**
  * 先进行MD5摘要再进行Base64编码获取摘要字符串；
  * @param bytes 字符串
- * @return 摘要，即请求头X-Content-MD5的值
+ * @return 摘要，即请求头X-Conent-MD5的值
  */
 public static String base64AndMD5(String param) {
     if (param == null) {
@@ -242,7 +242,7 @@ public String hmacSHA256(String stringToSign, String appSecret) {
 ## 2、使用postman自动化脚本联调测试
 > 为了方便采购商对接WinDHP平台，我们准备了postman自动化脚本：**WinDHP采购商请求示例脚本**；
 
-> 可以根据录入的三要素AppKey、AppSrcret、ServiceCode,自动计算出请求头X-Content-MD5、X-Ca-Signature的值，
+> 可以根据录入的三要素AppKey、AppSrcret、ServiceCode,自动计算出请求头X-Conent-MD5、X-Ca-Signature的值，
 
 postman自动化脚本下载地址：
 [WinDHP采购商请求示例.postman_collection.json](https://gitee.com/windhp-sdk/windhp-openapi-java-sdk/blob/master/windhp-openapi-java-sdk-client/WinDHP%E9%87%87%E8%B4%AD%E5%95%86%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B.postman_collection.json)

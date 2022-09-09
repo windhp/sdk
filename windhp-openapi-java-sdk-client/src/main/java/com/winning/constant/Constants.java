@@ -56,6 +56,10 @@ public class Constants {
      */
     public static final String EMPTY_STRING = "";
 
+    public static final String DEVICE_CLIENTID_EXT_SPLICESYMBOL = "\\|";
+
+    public static final String CLIENTID_SEPARATOR = "-";
+
     /**
      * APPLICATION_JSON
      */
@@ -75,4 +79,5 @@ public class Constants {
      * SSL
      */
     public static final String HTTP_SSL = "SSL";
+
 }

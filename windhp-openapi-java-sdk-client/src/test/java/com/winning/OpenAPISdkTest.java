@@ -26,32 +26,45 @@ import java.util.concurrent.TimeUnit;
  */
 public class OpenAPISdkTest {
 
-    //@Test
-    public void MyTest(){
+    public static void main(String[] args) throws Exception{
+////        while (true) {
+//            new Thread(() -> {
+//                try {
+//                    MyTest();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }).start();
+//            Thread.sleep(1000);
+////        }
+        long l = System.currentTimeMillis();
+        long ll = l - 1662610743997l;
+        System.out.println(ll/1000);
+    }
+
+    public static void MyTest() throws IOException {
         // 产品：主数据
         //https://openapi.windhp.com/call/simple
         // 接口调用 Q_SQDMBXX 查询申请单模板信息
         String serviceCode = "#ECT";
-        serviceCode = "000#Q_CONNECT";
-        String appkey = "000";
-        String appSecret = "000";
-        String url = "https://openapi.windhp.com/call/simple";
+        serviceCode = "33379249364992";
+        String appkey = "20866260602880";
+        String appSecret = "FSbDQNBYHgSl2XODOfCqT6w8plOlprl9";
+        String url = "http://172.17.0.164:7070/call/simple";
         IProfile profile = DHPProfile.getProfile(serviceCode, appkey, appSecret);
         try {
             long time1 = System.currentTimeMillis();
-            Response response = DHPHttpClient.post(profile)
-//                    .addHeader(SystemHeader.CONTENT_TYPE, "application/x-www-form-urlencoded")
-                    .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_JSON)
+            Response response = DHPHttpClient.get(profile)
+                    .addHeader(SystemHeader.CONTENT_TYPE, Constants.APPLICATION_FORM_URLENCODED)
+                    .addParams("id","1")
                     .url(url)
-                    .body("{}")
                     .build()
                     .execute();
             long time2 = System.currentTimeMillis();
-            System.out.println(response.string());
-            System.out.println("耗时：" + (int)(time2-time1));
-            Assert.assertEquals(response.code(), 200);
-            Assert.assertTrue(StringUtils.isEmpty(response.getCaErrorMessage()));
-            Assert.assertTrue(StringUtils.isNoneEmpty(response.getTraceId()));
+            ResponseBody body = response.body();
+            String string = body.string();
+            System.out.println(string);
+            System.out.println("结果：" + response.code() + " 耗时：" + (int)(time2-time1));
         } catch (ServerException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();

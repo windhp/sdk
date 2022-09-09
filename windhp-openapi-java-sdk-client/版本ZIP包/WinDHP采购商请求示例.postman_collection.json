@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "b036519f-d197-4d2c-821a-41efe1cdc65d",
+		"name": "WinDHP采购商请求示例脚本",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "WinDHP采购商请求示例 请求模板-2022-06-17",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"/**---------------------需要配置的信息----------------------------*/\r",
+							"var dhpOrganId = \"dhpOrganId\";       // WinDHP的机构编码\r",
+							"var winBizCode = \"Q_CONNECT\";        // 标准接口文档的BizCode\r",
+							"var appKey = \"appKey\";               // WinDHP的appKey\r",
+							"var appSecret = \"appSecret\";         // WinDHP提供的appSecret\r",
+							"/**-------------------------------------------------------------*/\r",
+							"\r",
+							"var serviceCode = dhpOrganId + \"#\" + winBizCode;\r",
+							"var nonce = createUuid();\r",
+							"var timestamp=new Date().getTime();\r",
+							"var Win_Timestamp = formateDateAndTimeToString(new Date());\r",
+							"var md5=calcMd5();\r",
+							"var signature = signature();\r",
+							"\r",
+							"// 设置到postMan域中\r",
+							"pm.globals.set('appKey', appKey);\r",
+							"pm.globals.set(\"nonce\", nonce);\r",
+							"pm.globals.set(\"winBizCode\", winBizCode);\r",
+							"pm.globals.set(\"serviceCode\", serviceCode);\r",
+							"pm.globals.set(\"timestamp\", timestamp);\r",
+							"pm.globals.set(\"md5\", md5);\r",
+							"pm.globals.set(\"wintimestamp\", Win_Timestamp);\r",
+							"pm.globals.set(\"signature\", signature);\r",
+							"\r",
+							"function signature() {\r",
+							"    var headers = headersToSign();\r",
+							"    console.log(\"headers:\" + headers);\r",
+							"    var textToSign = \"\";\r",
+							"    var sortedKeys = Array.from(headers.keys()).sort()\r",
+							"    for (var headerName of sortedKeys) {\r",
+							"        textToSign += headerName + \":\" + headers.get(headerName) + \"&\";\r",
+							"    }\r",
+							"    textToSign=textToSign.substring(0,textToSign.length-1);\r",
+							"    textToSign = \"POST\\napplication/json\\n\"+ textToSign;\r",
+							"    console.log(\"textToSign\\n\" + textToSign);\r",
+							"    var hash = CryptoJS.HmacSHA256(textToSign, appSecret)\r",
+							"    console.log(\"hash:\" + hash)\r",
+							"    var signature = hash.toString(CryptoJS.enc.Base64)\r",
+							"    console.log(\"signature:\" + signature)\r",
+							"    return signature;\r",
+							"}\r",
+							"\r",
+							"function createUuid() {\r",
+							"    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {\r",
+							"        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);\r",
+							"        return v.toString(16);\r",
+							"    });\r",
+							"}\r",
+							"function calcMd5() {\r",
+							"    var contentType = request.headers[\"content-type\"];\r",
+							"    console.log(request)\r",
+							"    if (request.data && contentType.startsWith('application/json')) {\r",
+							"        var data = request.data;\r",
+							"        data = compressJsonStr(data);\r",
+							"        console.log(data)\r",
+							"        var md5 = CryptoJS.MD5(data);\r",
+							"        var md5String = md5.toString(CryptoJS.enc.Base64);\r",
+							"        console.log(\"data:\" + data + \"\\nmd5:\" + md5String);\r",
+							"        return md5String;\r",
+							"    } else {\r",
+							"        return \"\";\r",
+							"    }\r",
+							"}\r",
+							"function headersToSign() {\r",
+							"    var headers = new Map();\r",
+							"    headers.set('x-service-code', serviceCode);\r",
+							"    headers.set('x-ca-key', appKey);\r",
+							"    headers.set('x-ca-nonce', nonce);\r",
+							"    headers.set('x-content-md5',md5)\r",
+							"    headers.set('x-ca-timestamp',timestamp)\r",
+							"    \r",
+							"    return headers;\r",
+							"}\r",
+							"function formatDateToString(date){\r",
+							"\tvar year = date.getFullYear();\r",
+							"\tvar month = date.getMonth()+1;\r",
+							"\tvar day = date.getDate();\r",
+							"\tif(month<10) month = \"0\"+month;\r",
+							"\tif(day<10) day = \"0\"+day;\r",
+							"\treturn year+month+day;\r",
+							"}\r",
+							"function formateDateAndTimeToString(date)\r",
+							"{\r",
+							"\tvar hours = date.getHours();\r",
+							"\tvar mins = date.getMinutes();\r",
+							"\tvar secs = date.getSeconds();\r",
+							"\tvar msecs = date.getMilliseconds();\r",
+							"\tif(hours<10) hours = \"0\"+hours;\r",
+							"\tif(mins<10) mins = \"0\"+mins;\r",
+							"\tif(secs<10) secs = \"0\"+secs;\r",
+							"\tif(msecs<10) secs = \"0\"+msecs;\r",
+							"\treturn formatDateToString(date)+hours+mins+secs;\r",
+							"}\r",
+							"\r",
+							"function compressJsonStr(jsonStr) {\r",
+							"  return JSON.stringify(JSON.parse(jsonStr.replace(/(\\s)|(\\t)|(\\r)|(\\n)/g,'')));\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Win-Biz-Code",
+						"value": "{{winBizCode}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Service-Code",
+						"value": "{{serviceCode}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Ca-Key",
+						"value": "{{appKey}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Ca-Nonce",
+						"value": "{{nonce}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Ca-Timestamp",
+						"value": "{{timestamp}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Content-MD5",
+						"value": "{{md5}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Ca-Signature",
+						"value": "{{signature}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Win-Message-Id",
+						"value": "{{nonce}}",
+						"type": "text"
+					},
+					{
+						"key": "Win-Timestamp",
+						"value": "{{wintimestamp}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "https://openapi.windhp.com/call/simple",
+					"protocol": "https",
+					"host": [
+						"openapi",
+						"windhp",
+						"com"
+					],
+					"path": [
+						"call",
+						"simple"
+					]
+				},
+				"description": "根据签名认证规则；\r\n通过请求前脚本，采购商直接配置“需要配置的信息” 然后加上自己的请求参数；\r\n即可完成请求的签名认证"
+			},
+			"response": []
+		}
+	]
+}
